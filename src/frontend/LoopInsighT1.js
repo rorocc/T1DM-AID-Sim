@@ -5,6 +5,7 @@
 
 import * as Vue from 'vue';
 import LT1Main from './App.vue';
+import store from "./../store/index.js";
 import Simulator from '../core/Simulator.js';
 import { createI18n } from "vue-i18n";
 import VTooltip from 'v-tooltip';
@@ -29,6 +30,8 @@ const LT1VueApp = {
 
 // create
 const app = Vue.createApp(LT1VueApp);
+
+app.use(store);
 
 
 // add multi-language support
