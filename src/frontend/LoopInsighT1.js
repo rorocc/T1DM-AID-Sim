@@ -4,11 +4,12 @@
    See https://lt1.org for further information.	*/
 
 import * as Vue from 'vue';
-import LT1Main from './components/LT1Main.vue';
+import LT1Main from './App.vue';
 import Simulator from '../core/Simulator.js';
 import { createI18n } from "vue-i18n";
 import VTooltip from 'v-tooltip';
 import 'v-tooltip/dist/v-tooltip.css';
+import './assets/css/tailwind.css';
    
 // prepare Vue app
 const LT1VueApp = {
