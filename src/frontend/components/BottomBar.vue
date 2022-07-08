@@ -1,9 +1,9 @@
 <template>
   <div class="tab-container absolute bottom-0 w-full bg-white">
-    <div class="flex justify-between">
+    <div class="grid grid-cols-3">
       <div class="tab-btn">Szenarien</div>
       <div class="tab-btn">Vergleichen</div>
-      <div class="tab-btn">Simulieren</div>
+      <div class="tab-btn active">Simulieren</div>
     </div>
   </div>
 
@@ -16,7 +16,15 @@
 }
 
 .tab-btn{
-  @apply px-6 py-4;
+  border-right: 1px solid #aaaaaa;
+  color: var(--blue-primary);
+  @apply px-6 py-4 text-center;
+}
+
+.tab-btn + .active{
+  color: var(--blue-light);
+  border-right: none;
+  background-color: var(--blue-primary);
 }
 
 </style>

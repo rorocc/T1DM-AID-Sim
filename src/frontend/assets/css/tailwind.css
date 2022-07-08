@@ -3,9 +3,10 @@
 @tailwind utilities;
 
 :root{
-    --background-blue-light: #F9FBFF;
+    --blue-light: #F9FBFF;
+    --blue-primary: #001E4B;
 }
 
 html{
-    background-color: var(--background-blue-light);
+    background-color: var(--blue-light);
 }
