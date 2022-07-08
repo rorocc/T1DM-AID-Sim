@@ -3,7 +3,7 @@ on:
   push:
     # We only run this GitHub action upon new commits to `main`
     branches:
-      - main
+      - master
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
