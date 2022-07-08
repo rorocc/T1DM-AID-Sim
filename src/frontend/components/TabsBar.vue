@@ -1,9 +1,10 @@
 <template>
-<div class="tab-container grid grid-cols-3 bg-white">
-  <div @click="toggleTab('tabCurves')" ref="tabCurves" class="tab-btn active">Kurven</div>
-  <div @click="toggleTab('tabStatistics')" ref="tabStatistics" class="tab-btn">Statistik</div>
-  <div @click="toggleTab('tabModel')" ref="tabModel" class="tab-btn">Modell</div>
+<div class="tab-container flex bg-white">
+  <div @click="toggleTab('tabCurves')" ref="tabCurves" class="tab-btn active"><i class="fa-solid fa-chart-line"></i> Kurven</div>
+  <div @click="toggleTab('tabStatistics')" ref="tabStatistics" class="tab-btn"><i class="fa-solid fa-chart-pie"></i> Statistik</div>
+  <div @click="toggleTab('tabModel')" ref="tabModel" class="tab-btn"><i class="fa-solid fa-diagram-project"></i> Modell</div>
 </div>
+
   <TabCurves v-if="this.activeTab === 'tabCurves'"></TabCurves>
   <TabStatistics v-if="this.activeTab === 'tabStatistics'"></TabStatistics>
   <TabModel v-if="this.activeTab === 'tabModel'"></TabModel>

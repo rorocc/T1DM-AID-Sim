@@ -38,7 +38,6 @@ const i18n = createI18n({
 });
 app.use(i18n);
 
-
 // add tooltip support
 app.use(VTooltip);
 
