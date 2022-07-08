@@ -6,13 +6,14 @@ on:
       - master
 jobs:
   build-and-deploy:
+    concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Install
-        run: npm install
+        run: npm ci
 
       - name: Build
         run: npm run build
@@ -22,8 +23,3 @@ jobs:
         with:
           branch: gh-pages
           folder: dist
-          # Remove previous build files
-          clean: true
-          # Do not remove the `.nojekyll` file: we have manually added an empty `.nojekyll` file at the root of the `gh-pages` branch and we don't want having to re-create it after each build.
-          clean-exclude: |
-            .nojekyll
