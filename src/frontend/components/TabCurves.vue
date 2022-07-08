@@ -1,10 +1,15 @@
 <template>
- <p>Curves</p>
+  <ContentContainer>
+    <h1>Kurven</h1>
+  </ContentContainer>
 </template>
 
 <script>
+import ContentContainer from "./ContentContainer.vue";
+
 export default {
-  name: "TabCurves"
+  name: "TabCurves",
+  components: {ContentContainer}
 }
 </script>
 
