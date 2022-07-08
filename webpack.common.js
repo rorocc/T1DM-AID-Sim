@@ -16,7 +16,7 @@ export default {
   module: {
     rules: [
       { test: /\.vue$/, use: 'vue-loader' },
-      { test: /\.css$/, use: [ 'style-loader', 'css-loader' ] },
+      { test: /\.css$/, use: [ 'style-loader', 'css-loader', 'postcss-loader' ] },
       { test: /\.html$/, use: ['html-loader'] },
       {
         resourceQuery: /blockType=i18n/,
