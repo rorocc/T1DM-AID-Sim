@@ -1,9 +1,6 @@
 <template>
-  <div class="container mx-auto p-4">
+  <div class="container mx-auto p-4 h-full">
     <Tabs></Tabs>
-    <ContentContainer>
-      {{this.$store.getters.results}}
-    </ContentContainer>
   </div>
   <BottomBar></BottomBar>
 </template>

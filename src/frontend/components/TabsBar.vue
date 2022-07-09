@@ -5,7 +5,7 @@
   <div @click="toggleTab('tabModel')" ref="tabModel" class="tab-btn"><i class="fa-solid fa-diagram-project"></i> Modell</div>
 </div>
 
-  <TabCurves v-if="this.activeTab === 'tabCurves'"></TabCurves>
+  <TabCurves v-show="this.activeTab === 'tabCurves'"></TabCurves>
   <TabStatistics v-if="this.activeTab === 'tabStatistics'"></TabStatistics>
   <TabModel v-if="this.activeTab === 'tabModel'"></TabModel>
 </template>

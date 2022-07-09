@@ -47,7 +47,6 @@ export default {
       let simResults = JSON.parse(JSON.stringify(this.$store.getters.results))
 
       for (const result of simResults) {
-        console.log("counter", result.x)
         const {t, x, u, y, logData} = result
         chartGlucose.data.datasets[0].data
             .push({x:t.valueOf(), y:y.G});
