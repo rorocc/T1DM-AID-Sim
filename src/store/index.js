@@ -26,10 +26,12 @@ export default createStore({
             state.computedStats.averageGlucose = 0;
             state.computedStats.GMI = 0;
             state.computedStats.glucoseVariability = 0;
+            state.computedStats.totalBolus = 0;
 
         },
         PUSH_RECORD(state, result){
             const { t, x, u, y, logData } = result;
+            state.computedStats.totalBolus += u.ibolus;
             state.computedStats.G.push(y.G);
             state.computedStats.t_total++;
             let G = y.G;
