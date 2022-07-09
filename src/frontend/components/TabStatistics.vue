@@ -25,7 +25,7 @@
       <div class="bar-container">
         <div class="tir_bar">
           <div class="tir_progress" :style="{ width: this.getTirPercentage(this.$store.getters.computedStats.tir_high) + '%'}">
-            <p>{{ this.$store.getters.computedStats.tir_high }}</p>
+            <p>{{ getTimeString(this.$store.getters.computedStats.tir_high) }}</p>
           </div>
         </div>
         <div>Hoch</div>
@@ -33,7 +33,7 @@
       <div class="bar-container">
         <div class="tir_bar">
           <div class="tir_progress" :style="{ width: this.getTirPercentage(this.$store.getters.computedStats.tir_target) + '%'}">
-            <p>{{ this.$store.getters.computedStats.tir_target }}</p>
+            <p>{{ getTimeString(this.$store.getters.computedStats.tir_target) }}</p>
           </div>
         </div>
         <div>Zielbereich</div>
@@ -41,7 +41,7 @@
       <div class="bar-container">
         <div class="tir_bar">
           <div class="tir_progress" :style="{ width: this.getTirPercentage(this.$store.getters.computedStats.tir_low) + '%'}">
-            {{ this.$store.getters.computedStats.tir_low }}
+            <p>{{ getTimeString(this.$store.getters.computedStats.tir_low) }}</p>
           </div>
         </div>
         <div>Niedrig</div>
@@ -78,6 +78,16 @@ export default {
   methods: {
     getTirPercentage(tirValue){
       return this.$store.getters.computedStats.t_total <= 0 ? 0 : Math.round((100 * tirValue) / this.$store.getters.computedStats.t_total);
+    },
+    getTimeString(tirValue){
+      let hours = tirValue / 60;
+      let rhours = Math.floor(hours);
+      let minutes = (hours-rhours)*60;
+      let rminutes = Math.floor(minutes);
+
+      let hoursString = (rhours <= 0) ? "" : rhours + 'h ';
+
+      return hoursString + rminutes + 'min';
     }
   }
 }
