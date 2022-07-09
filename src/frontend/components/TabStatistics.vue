@@ -1,5 +1,5 @@
 <template>
-  <div class="circles flex justify-center">
+  <div class="circles flex justify-center my-4">
     <div class="outer-circle -mr-4">
       <div class="content">
         <p class="stat-no">{{this.$store.getters.computedStats.totalBolus}}</p>
@@ -21,6 +21,34 @@
   </div>
   <ContentContainer>
     <h1>Zeit in Bereichen</h1>
+    <div class="space-y-3">
+      <div class="bar-container">
+        <div class="tir_bar">
+          <div class="tir_progress" :style="{ width: this.getTirPercentage(this.$store.getters.computedStats.tir_high) + '%'}">
+            <p>{{ this.$store.getters.computedStats.tir_high }}</p>
+          </div>
+        </div>
+        <div>Hoch</div>
+      </div>
+      <div class="bar-container">
+        <div class="tir_bar">
+          <div class="tir_progress" :style="{ width: this.getTirPercentage(this.$store.getters.computedStats.tir_target) + '%'}">
+            <p>{{ this.$store.getters.computedStats.tir_target }}</p>
+          </div>
+        </div>
+        <div>Zielbereich</div>
+      </div>
+      <div class="bar-container">
+        <div class="tir_bar">
+          <div class="tir_progress" :style="{ width: this.getTirPercentage(this.$store.getters.computedStats.tir_low) + '%'}">
+            {{ this.$store.getters.computedStats.tir_low }}
+          </div>
+        </div>
+        <div>Niedrig</div>
+      </div>
+    </div>
+
+
   </ContentContainer>
 
   <ContentContainer>
@@ -46,11 +74,35 @@
 import ContentContainer from "./ContentContainer.vue";
 export default {
   name: "TabStatistics",
-  components: {ContentContainer}
+  components: {ContentContainer},
+  methods: {
+    getTirPercentage(tirValue){
+      return this.$store.getters.computedStats.t_total <= 0 ? 0 : Math.round((100 * tirValue) / this.$store.getters.computedStats.t_total);
+    }
+  }
 }
 </script>
 
 <style scoped>
+.bar-container{
+  @apply grid grid-cols-3 text-right;
+}
+
+.tir_bar{
+  background-color: var(--blue-medium);
+  @apply w-full h-6 rounded-full overflow-hidden col-span-2;
+}
+
+.tir_progress{
+  background-color: #6F829E;
+  color: var(--blue-primary);
+  @apply h-full text-right;
+}
+
+.tir_progress p{
+  @apply px-2
+}
+
 .stat-no{
   @apply text-4xl font-medium;
 }

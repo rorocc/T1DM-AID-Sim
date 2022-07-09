@@ -13,6 +13,6 @@ export default {
 <style>
  .ContentContainer h1{
    color: var(--blue-primary);
-   @apply font-medium;
+   @apply font-medium mb-2;
  }
 </style>
