@@ -1,6 +1,9 @@
 <template>
   <div class="container mx-auto p-4">
     <Tabs></Tabs>
+    <ContentContainer>
+      {{this.$store.getters.results}}
+    </ContentContainer>
   </div>
   <BottomBar></BottomBar>
 </template>
@@ -10,17 +13,35 @@ import Simulator from '../core/Simulator.js'
 import ControllerBasalBolus from '../core/controllers/BasalBolus.js'
 import VirtualPatientUvaPadova from '../core/models/UvaPadova.js'
 import BottomBar from './components/BottomBar.vue';
+import ContentContainer from "./components/ContentContainer.vue";
 import Tabs from './components/TabsBar.vue';
 
 export default {
   props: {
     runSimulation: Function
   },
-  components: {BottomBar, Tabs},
+  components: {BottomBar, Tabs, ContentContainer},
   data(){
     return{
-
+      results: {}
     }
+  },
+  methods: {
+    run() {
+      this.resetData();
+      this.runSimulation();
+      this.updateData();
+    },
+    resetData(){
+      //todo
+    },
+    runSimulation(){
+      //todo
+    },
+    updateData(){
+      //todo
+    }
+
   },
   mounted() {
 
@@ -55,10 +76,10 @@ export default {
     sim.setOptions(this.$store.getters.timeRange)
 
     sim.runSimulation()
-    const results = sim.getSimulationResults()
+    this.$store.dispatch("setResults",sim.getSimulationResults());
 
 // display the results (or preprocess them as you need)
-    console.log(results)
+    console.log("log",this.$store.getters.results)
   }
 }
 

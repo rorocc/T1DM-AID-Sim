@@ -1,6 +1,7 @@
 <template>
   <ContentContainer>
     <h1>Zeit in Bereichen</h1>
+    {{this.$store.getters.computedStats.averageGlucose}} Avg Glucose
   </ContentContainer>
 
   <ContentContainer>
