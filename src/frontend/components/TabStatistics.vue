@@ -1,4 +1,5 @@
 <template>
+<ContentContainer>
   <div class="circles flex justify-center my-4">
     <div class="outer-circle -mr-4">
       <div class="content">
@@ -19,6 +20,7 @@
       </div>
     </div>
   </div>
+</ContentContainer>
   <ContentContainer>
     <h1>Zeit in Bereichen</h1>
     <div class="space-y-3">

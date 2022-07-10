@@ -2,7 +2,9 @@
   <div class="container mx-auto p-4 h-full">
     <Tabs></Tabs>
   </div>
-  <BottomBar></BottomBar>
+  <footer>
+   <BottomBar></BottomBar>
+  </footer>
 </template>
 
 <script>

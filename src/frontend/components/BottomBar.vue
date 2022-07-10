@@ -1,5 +1,5 @@
 <template>
-  <div class="tab-container absolute bottom-0 w-full bg-white sticky">
+  <div class="tab-container block fixed inset-x-0 bottom-0 z-10 w-full bg-white">
     <div class="grid grid-cols-3">
       <div class="tab-btn">Szenarien</div>
       <div class="tab-btn">Vergleichen</div>
