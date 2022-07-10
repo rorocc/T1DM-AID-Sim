@@ -53,6 +53,17 @@
 
   <ContentContainer>
     <h1>Statistik</h1>
+    <div class="grid grid-cols-2 text-center">
+      <div>
+        <p class="stats-content text-green-500">{{this.$store.getters.computedStats.averageGlucose}} mg/dL</p>
+        <p>Mittelwert Glukose</p>
+      </div>
+      <div>
+        <p class="stats-content">{{this.$store.getters.computedStats.GMI}} %</p>
+        <p>Glukosemanagement-</p>
+        <p>indikator</p>
+      </div>
+    </div>
   </ContentContainer>
 
   <ContentContainer>
@@ -132,6 +143,10 @@ export default {
 .outer-circle{
   background-color: var(--blue-medium);
   @apply rounded-full h-28 w-28 text-center flex my-auto;
+}
+
+.stats-content{
+  @apply text-2xl font-semibold;
 }
 
 </style>
