@@ -4,6 +4,7 @@
 
 <script>
 import Chart from 'chart.js/auto';
+import { defaults } from 'chart.js'
 import 'chartjs-adapter-moment';
 
 let chartGlucose;
@@ -112,6 +113,11 @@ export default {
     });
 
     this.createDataset();
+  },
+  beforeMount() {
+    defaults.elements.point.pointStyle = 'line'
+		defaults.elements.point.radius = 0
+		
   }
 }
 </script>
