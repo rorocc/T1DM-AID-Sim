@@ -3,19 +3,20 @@
   <div class="circles flex justify-center my-4">
     <div class="outer-circle -mr-4">
       <div class="content">
-        <p class="stat-no">{{this.$store.getters.computedStats.totalBolus}}</p>
-        <p>Bolus</p>
+        <p class="stat-no text-blue-400">{{this.$store.getters.computedStats.IIReq}} IE</p> <!-- needed: basal rate -->
+        <p>Basal </p>
       </div>
     </div>
     <div class="center-circle">
       <div class="content">
-        <p class="stat-no">{{this.$store.getters.computedStats.averageGlucose}}</p>
-        <p>Avg Glucose</p>
+        <p class="stat-no">{{this.$store.getters.computedStats.averageGlucose}} IE</p>
+        <p>Gesamt-</p>
+        <p>Insulin</p>
       </div>
     </div>
     <div class="outer-circle -ml-4">
       <div class="content">
-        <p class="stat-no">{{this.$store.getters.computedStats.totalBolus}}</p>
+        <p class="stat-no text-teal-400">{{this.$store.getters.computedStats.totalBolus}} IE</p>
         <p>Bolus</p>
       </div>
     </div>
@@ -26,27 +27,33 @@
     <div class="space-y-3">
       <div class="bar-container">
         <div class="tir_bar">
-          <div class="tir_progress" :style="{ width: this.getTirPercentage(this.$store.getters.computedStats.tir_high) + '%'}">
+          <div class="tir_progressHigh" :style="{ width: this.getTirPercentage(this.$store.getters.computedStats.tir_high) + '%'}">
             <p>{{ getTimeString(this.$store.getters.computedStats.tir_high) }}</p>
           </div>
         </div>
-        <div>Hoch</div>
+        <div>
+          <p>Hoch (&lt;180mg/dL) </p>
+        </div>
       </div>
       <div class="bar-container">
         <div class="tir_bar">
-          <div class="tir_progress" :style="{ width: this.getTirPercentage(this.$store.getters.computedStats.tir_target) + '%'}">
+          <div class="tir_progressIR" :style="{ width: this.getTirPercentage(this.$store.getters.computedStats.tir_target) + '%'}">
             <p>{{ getTimeString(this.$store.getters.computedStats.tir_target) }}</p>
           </div>
         </div>
-        <div>Zielbereich</div>
+        <div>
+          <p>Zielbereich (70-180mg/dL)</p>
+        </div>
       </div>
       <div class="bar-container">
         <div class="tir_bar">
-          <div class="tir_progress" :style="{ width: this.getTirPercentage(this.$store.getters.computedStats.tir_low) + '%'}">
+          <div class="tir_progressLow" :style="{ width: this.getTirPercentage(this.$store.getters.computedStats.tir_low) + '%'}">
             <p>{{ getTimeString(this.$store.getters.computedStats.tir_low) }}</p>
           </div>
         </div>
-        <div>Niedrig</div>
+        <div>
+          <p>Niedrig (>70mg/dL) </p>
+        </div>
       </div>
     </div>
 
@@ -70,13 +77,14 @@
 
   <ContentContainer>
     <h1>Zeitraum</h1>
-    <div class="grid grid-cols-2">
+    <div class="grid grid-cols-2 items-center">
       <div>
         <p>{{this.$store.getters.timeRange.t0.toLocaleString()}}</p>
         <p>{{this.$store.getters.timeRange.tmax.toLocaleString()}}</p>
         <p>{{(this.$store.getters.timeRange.tmax - this.$store.getters.timeRange.t0)/ (1000 * 3600)}} Stunden betrachtet</p>
       </div>
       <div>
+        <p> {{ this.$store.getters.meals}} </p> <!-- needed: number of meals -->
         <p>Mahlzeiten</p>
       </div>
     </div>
@@ -116,8 +124,20 @@ export default {
   @apply w-full h-6 rounded-full overflow-hidden col-span-2;
 }
 
-.tir_progress{
-  background-color: #6F829E;
+.tir_progressHigh{
+  background-color: #8333ce;
+  color: var(--blue-primary);
+  @apply h-full text-right;
+}
+
+.tir_progressIR{
+  background-color: #6dd63c;
+  color: var(--blue-primary);
+  @apply h-full text-right;
+}
+
+.tir_progressLow{
+  background-color: #dd1f29;
   color: var(--blue-primary);
   @apply h-full text-right;
 }
