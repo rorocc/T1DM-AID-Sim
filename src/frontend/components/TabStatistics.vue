@@ -9,7 +9,7 @@
     </div>
     <div class="center-circle">
       <div class="content">
-        <p class="stat-no">{{this.$store.getters.computedStats.averageGlucose}} IE</p>
+        <p class="stat-no">{{this.$store.getters.computedStats.averageGlucose}} IE</p> <!-- avg glucose nicht richtig oder? -->
         <p>Gesamt-</p>
         <p>Insulin</p>
       </div>
