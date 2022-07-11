@@ -2,70 +2,90 @@
   <ContentContainer>
     <h1>Modell</h1>
     <div class="model-row">
-      <h1>Deine Eingaben</h1>
-      <div class="col-start-1"></div>
+      <div class="grid grid-cols-3">
+        <h1>Deine Eingaben</h1>
+        <div class="col-start-1"></div>
+      </div>
       <div class="circle-container col-start-2">
-        <div class="circle focused-circle">
+        <div @click="toggleCircle('meal')" ref="meal" class="circle focused-circle">
           <div class="content">
-            <p>Mahlzeit</p>
-            <p>40g KH</p>
+            <p>{{ this.circles['meal'].firstLine }}</p>
+            <p>{{ this.circles['meal'].secondLine }}</p>
           </div>
         </div>
       </div>
       <div class="circle-container">
-        <div class="circle">
+        <div @click="toggleCircle('data')" ref="data" class="circle">
           <div class="content">
-            <p>Physiolog.</p>
-            <p>Daten</p>
+            <p>{{ this.circles['data'].firstLine }}</p>
+            <p>{{ this.circles['data'].secondLine }}</p>
           </div>
         </div>
       </div>
     </div>
-    <div class="model-row mt-8">
-      <h1>Berechnungen</h1>
-      <div class="circle-container col-start-1">
-        <div class="circle">
-          <div class="content">
-            <p>Berechnung</p>
-            <p>Insulin-</p>
-            <p>dosierung</p>
+    <div class="grid grid-cols-3">
+      <div class="circle-container col-start-2">
+        <i class="fa-solid fa-arrow-down-long"></i>
+      </div>
+    </div>
+    <div class="model-row">
+      <div class="grid grid-cols-3">
+        <h1 class="z-10">Berechnungen</h1>
+        <div class="circle-container">
+          <div @click="toggleCircle('calcInsulin')" ref="calcInsulin" class="circle">
+            <div class="content">
+              <p>{{ this.circles['calcInsulin'].firstLine }}</p>
+              <p>{{ this.circles['calcInsulin'].secondLine }}</p>
+              <p>{{ this.circles['calcInsulin'].thirdLine }}</p>
+            </div>
           </div>
         </div>
       </div>
       <div class="circle-container">
-        <div class="circle">
+        <div @click="toggleCircle('calcGlucose')" ref="calcGlucose" class="circle">
           <div class="content">
-            <p>Berechnung</p>
-            <p>Blutzucker</p>
+            <p>{{ this.circles['calcGlucose'].firstLine }}</p>
+            <p>{{ this.circles['calcGlucose'].secondLine }}</p>
           </div>
         </div>
       </div>
     </div>
-    <div class="model-row mt-8">
-      <h1>Anpassungen</h1>
-      <div class="circle-container col-start-1">
-        <div class="circle">
-          <div class="content">
-            <p>Spritzen</p>
-            <p>der Insulin-</p>
-            <p>dosis</p>
+    <div class="grid grid-cols-3">
+      <div class="circle-container">
+        <i class="fa-solid fa-arrow-down-long"></i>
+      </div>
+      <div class="circle-container">
+        <i class="fa-solid fa-arrow-up-long"></i>
+      </div>
+    </div>
+    <div class="model-row">
+      <div class="grid grid-cols-3">
+        <h1 class="z-10">Anpassungen</h1>
+        <div class="circle-container">
+          <div @click="toggleCircle('injectInsulin')" ref="injectInsulin" class="circle min-w-max">
+            <div class="content">
+              <p>{{ this.circles['injectInsulin'].firstLine }}</p>
+              <p>{{ this.circles['injectInsulin'].secondLine }}</p>
+              <p>{{ this.circles['injectInsulin'].thirdLine }}</p>
+            </div>
           </div>
         </div>
       </div>
       <div class="circle-container">
-        <div class="circle">
+        <div @click="toggleCircle('checkGlucose')" ref="checkGlucose"  class="circle">
           <div class="content">
-            <p>Überprüfung</p>
-            <p>des Blutzuckers</p>
+            <p>{{ this.circles['checkGlucose'].firstLine }}</p>
+            <p>{{ this.circles['checkGlucose'].secondLine }}</p>
+            <p>{{ this.circles['checkGlucose'].thirdLine }}</p>
           </div>
         </div>
       </div>
       <div class="circle-container">
-        <div class="circle">
+        <div @click="toggleCircle('adjustBasal')" ref="adjustBasal" class="circle">
           <div class="content">
-            <p>Anpassung</p>
-            <p>der Basal-</p>
-            <p>rate</p>
+            <p>{{ this.circles['adjustBasal'].firstLine }}</p>
+            <p>{{ this.circles['adjustBasal'].secondLine }}</p>
+            <p>{{ this.circles['adjustBasal'].thirdLine }}</p>
           </div>
         </div>
       </div>
@@ -75,17 +95,18 @@
   <div>
     <div style="background-color: var(--blue-primary);" class="w-full text-center text-white py-2">
       <div class="grid grid-cols-3">
-        <i class="fa-solid fa-angle-left my-auto"></i>
-        <p>Deine Eingaben: Mahlzeiten</p>
-        <i class="fa-solid fa-angle-right my-auto"></i>
+        <i @click="previousCircle()" class="fa-solid fa-angle-left my-auto"></i>
+        <p>{{ this.circles[this.activeCircle].headline }}</p>
+        <i @click="nextCircle()" class="fa-solid fa-angle-right my-auto"></i>
       </div>
     </div>
     <div class="grid grid-cols-3 gap-2">
       <div class="col-span-1 flex justify-center my-auto">
         <div class="circle focused-circle">
           <div class="content">
-            <p>Mahlzeit</p>
-            <p>40g KH</p>
+            <p>{{ this.circles[this.activeCircle].firstLine }}</p>
+            <p>{{ this.circles[this.activeCircle].secondLine }}</p>
+            <p>{{ this.circles[this.activeCircle].thirdLine }}</p>
           </div>
         </div>
       </div>
@@ -101,7 +122,38 @@ import ContentContainer from "./ContentContainer.vue";
 
 export default {
   name: "TabModel",
-  components: {ContentContainer}
+  components: {ContentContainer},
+  data(){
+    return{
+      activeCircle: 'meal',
+      circles: {
+        'meal':{headline:'Deine Eingaben: Mahlzeiten', firstLine: 'Mahlzeit', secondLine: '40g KH', thirdLine: '', next: 'data', previous: 'adjustBasal'},
+        'data':{headline:'Deine Eingaben: Physiologische Daten', firstLine: 'Physiolog.', secondLine: 'Daten', thirdLine:'', next: 'calcInsulin', previous: 'meal'},
+        'calcInsulin':{headline:'Berechnungen: Berechnung Insulindosierung', firstLine: 'Berechnung', secondLine: 'Insulin-', thirdLine:'dosierung', next: 'calcGlucose', previous: 'data'},
+        'calcGlucose':{headline:'Berechnungen: Berechnung Blutzucker', firstLine: 'Berechnung', secondLine: 'Blutzucker', thirdLine:'', next: 'injectInsulin', previous: 'calcInsulin'},
+        'injectInsulin':{headline:'Anpassungen: Spritzen der Insulindosis', firstLine: 'Spritzen', secondLine: 'der Insulin-', thirdLine:'dosis', next: 'checkGlucose', previous: 'calcGlucose'},
+        'checkGlucose':{headline:'Anpassungen: Überprüfung des Blutzuckers', firstLine: 'Überprüfung', secondLine: 'des Blut-', thirdLine:'zuckers', next: 'adjustBasal', previous: 'injectInsulin'},
+        'adjustBasal':{headline:'Anpassungen: Anpassung der Basalrate', firstLine: 'Anpassung', secondLine: 'der Basal-', thirdLine:'rate', next: 'meal', previous: 'checkGlucose'}
+      },
+    }
+  },
+  methods:{
+    toggleCircle(circleRef){
+      this.$refs[this.activeCircle].classList.remove('focused-circle');
+      this.$refs[circleRef].classList.add('focused-circle');
+      this.activeCircle = circleRef;
+    },
+    nextCircle(){
+      this.$refs[this.activeCircle].classList.remove('focused-circle');
+      this.activeCircle = this.circles[this.activeCircle].next;
+      this.toggleCircle(this.activeCircle);
+    },
+    previousCircle(){
+      this.$refs[this.activeCircle].classList.remove('focused-circle');
+      this.activeCircle = this.circles[this.activeCircle].previous;
+      this.toggleCircle(this.activeCircle);
+    }
+  }
 }
 </script>
 
@@ -115,7 +167,7 @@ export default {
   }
   .circle {
     background-color: var(--blue-medium);
-    @apply rounded-full h-28 w-28 text-center flex my-2;
+    @apply rounded-full md:h-28 md:w-28 h-20 w-20 text-center flex my-2;
   }
   .circle .content {
     @apply my-auto mx-auto;
