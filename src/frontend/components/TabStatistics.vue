@@ -16,7 +16,7 @@
     </div>
     <div class="outer-circle -ml-4">
       <div class="content">
-        <p class="stat-no text-blue-400">{{this.$store.getters.computedStats.totalBolus}} IE</p>
+        <p class="stat-no text-teal-400">{{this.$store.getters.computedStats.totalBolus}} IE</p>
         <p>Bolus</p>
       </div>
     </div>
