@@ -3,6 +3,36 @@
     <div v-if="this.isDialogOpen" class="bottom-dialog h-full"> <!-- Bottom Dialog Screens -->
       <BottomBarContent v-if="this.currentDialog === 'tabScenario'">
         <div @click="toggleDialog(0)" class="closer"></div>
+        <div class="grid grid-rows-2 space-y-1">
+          <div class="flex justify-around">
+            <div class="scenario-block">
+              <p>Aufstehen</p>
+              <i class="fa-solid fa-sun"></i>
+            </div>
+            <div class="scenario-block">
+              <p>Doppelte Mahlzeit</p>
+              <i class="fa-solid fa-bowl-food"></i>
+            </div>
+            <div class="scenario-block">
+              <p>Alkohol</p>
+              <i class="fa-solid fa-wine-bottle"></i>
+            </div>
+          </div>
+          <div class="flex justify-around">
+            <div class="scenario-block">
+              <p>Lange Reise</p>
+              <i class="fa-solid fa-plane"></i>
+            </div>
+            <div class="scenario-block">
+              <p>Fettiges Essen</p>
+              <i class="fa-solid fa-burger"></i>
+            </div>
+            <div class="scenario-block add">
+              <p>Kurve als Szenario speichern</p>
+              <i class="fa-solid fa-plus"></i>
+            </div>
+          </div>
+        </div>
       </BottomBarContent>
       <BottomBarContent v-if="this.currentDialog === 'tabCompare'">
         <div @click="toggleDialog(0)" class="closer"></div>
@@ -12,20 +42,20 @@
         <div @click="toggleDialog(0)" class="closer"></div>
         <div class="sidebarNav grid absolute right-0 h-full top-0">
           <div class="sidebarItem">
-            <span>Icon</span>
-            <span>Text</span>
+            <i class="fa-solid fa-apple-whole"></i>
+            <p>Mahlzeiten</p>
+          </div>
+          <div class="sidebarItem active">
+            <i class="fa-solid fa-clock"></i>
+            <p>Zeitraum</p>
           </div>
           <div class="sidebarItem">
-            <span>Icon</span>
-            <span>Text</span>
+            <i class="fa-solid fa-syringe"></i>
+            <p>Therapie</p>
           </div>
           <div class="sidebarItem">
-            <span>Icon</span>
-            <span>Text</span>
-          </div>
-          <div class="sidebarItem">
-            <span>Icon</span>
-            <span>Text</span>
+            <i class="fa-solid fa-user"></i>
+            <p>Patient:in</p>
           </div>
         </div>
       </BottomBarContent>
@@ -49,7 +79,7 @@ export default {
   data(){
     return{
       isDialogOpen: true,
-      currentDialog: "tabSimulate"
+      currentDialog: "tabScenario"
     }
   },
   methods: {
@@ -85,9 +115,45 @@ export default {
 
 <style scoped>
 
-.sidebarItem{
-  @apply bg-blue-200 w-44 text-center;
+.scenario-block{
+  background-color: var(--blue-medium);
+  color: var(--blue-grey);
+  @apply w-28 h-28 overflow-hidden relative rounded flex;
 }
+
+.scenario-block p{
+  @apply text-center m-auto;
+}
+
+.scenario-block i{
+  opacity: 0.15;
+  @apply absolute text-9xl -left-1/3 top-0;
+}
+
+
+.scenario-block.add{
+  background: none;
+  border: 1px solid;
+  border-color: var(--blue-medium);
+}
+
+i{
+  @apply text-2xl;
+}
+
+.sidebarItem{
+  background-color: var(--blue-medium);
+  color: var(--blue-grey);
+  border-bottom: 1px solid;
+  border-color: var(--blue-grey);
+  @apply w-24 text-center my-auto h-full;
+}
+
+.sidebarItem + .active{
+  background-color: var(--blue-grey);
+  color: var(--blue-medium);
+}
+
 
 .sidebarNav{
   border-radius: 0 22px 0 0;
