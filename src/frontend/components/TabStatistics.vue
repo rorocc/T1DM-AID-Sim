@@ -3,19 +3,20 @@
   <div class="circles flex justify-center my-4">
     <div class="outer-circle -mr-4">
       <div class="content">
-        <p class="stat-no">{{this.$store.getters.computedStats.totalBolus}}</p>
-        <p>Bolus</p>
+        <p class="stat-no text-blue-400">{{this.$store.getters.computedStats.IIRb}} IE</p>
+        <p>Basal </p>
       </div>
     </div>
     <div class="center-circle">
       <div class="content">
-        <p class="stat-no">{{this.$store.getters.computedStats.averageGlucose}}</p>
-        <p>Avg Glucose</p>
+        <p class="stat-no">{{this.$store.getters.computedStats.averageGlucose}} IE</p>
+        <p>Gesamt-</p>
+        <p>Insulin</p>
       </div>
     </div>
     <div class="outer-circle -ml-4">
       <div class="content">
-        <p class="stat-no">{{this.$store.getters.computedStats.totalBolus}}</p>
+        <p class="stat-no text-blue-400">{{this.$store.getters.computedStats.totalBolus}} IE</p>
         <p>Bolus</p>
       </div>
     </div>
@@ -30,7 +31,9 @@
             <p>{{ getTimeString(this.$store.getters.computedStats.tir_high) }}</p>
           </div>
         </div>
-        <div>Hoch</div>
+        <div>
+          <p>Hoch (&lt;180mg/dL) </p>
+        </div>
       </div>
       <div class="bar-container">
         <div class="tir_bar">
@@ -38,7 +41,9 @@
             <p>{{ getTimeString(this.$store.getters.computedStats.tir_target) }}</p>
           </div>
         </div>
-        <div>Zielbereich</div>
+        <div>
+          <p>Zielbereich (70-180mg/dL)</p>
+        </div>
       </div>
       <div class="bar-container">
         <div class="tir_bar">
@@ -46,7 +51,9 @@
             <p>{{ getTimeString(this.$store.getters.computedStats.tir_low) }}</p>
           </div>
         </div>
-        <div>Niedrig</div>
+        <div>
+          <p>Niedrig (>70mg/dL) </p>
+        </div>
       </div>
     </div>
 
