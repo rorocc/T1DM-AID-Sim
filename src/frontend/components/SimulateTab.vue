@@ -31,11 +31,17 @@
   </div>
 
   <div class="container w-2/3">
-    <div v-if="this.activeTab==='tabPatient'">
-      <input type="text" placeholder="Alter">
-      <input type="text" placeholder="Gewicht">
+    <div v-if="this.activeTab==='tabPatient'" style="background-color: var(--blue-light);" class="p-4 my-2 rounded">
+      <!-- TODO alles bisher ohne Auswirkungen -->
+      <div class="grid grid-flow-col justify-between">
+        <label for="age">Alter</label>
+        <input id="age" v-model.lazy="age" type="number" placeholder="Alter" class="w-20">
+      </div>
+      <div class="grid grid-flow-col justify-between">
+        <label for="weight">Gewicht in kg</label>
+        <input id="weight" v-model.lazy="weight" type="number" class="w-20">
+      </div>
     </div>
-
 
     <div>
       <div v-if="this.activeTab==='tabTime'" style="background-color: var(--blue-light);" class="p-4 my-2 rounded">
@@ -49,7 +55,7 @@
         </div>
         <div class="grid grid-flow-col justify-between">
           <label for="hours">Zeitraum in h</label>
-          <input id="hours" v-model.lazy="hours" type="number" placeholder="Zeitraum in h" class="w-full">
+          <input id="hours" v-model.lazy="hours" type="number" placeholder="Zeitraum in h" class="w-20">
         </div>
       </div>
 
@@ -109,6 +115,8 @@ export default {
       time: new Date().toLocaleTimeString(),
       hours: 8,
       meals: this.$store.getters.input.meals,
+      weight: 75,
+      age: 20,
     }
   },
   watch: {
