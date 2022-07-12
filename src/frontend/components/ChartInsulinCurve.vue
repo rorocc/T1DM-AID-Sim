@@ -27,23 +27,32 @@ export default {
         chartInsulinCarbs.data.datasets = [];
         
 		chartInsulinCarbs.data.datasets.push({
-          	type: "scatter", 
+          	type: "line", 
+		    yAxisID: 'y', 
+			label: this.$t("iir"), 
+			borderColor: colors['THURed'], 
+			spanGaps: true, 
+			stepped: "before",
+			data: [],},
+			{
+			type: "scatter", 
 			label: this.$t("ibolus"), 
 			backgroundColor: colors['THURed'], 
 			radius: 10, 
 			pointStyle: "triangle", 
 			rotation: 180,
-		    data: [],
-	    });
+		    data: [],},
+	  	);
        
 	    let simResults = JSON.parse(JSON.stringify(this.$store.getters.results))
      
 	    for (const result of simResults) {
           const {t, x, u, y, logData} = result
-		  chartInsulinCarbs.data.datasets[0].data
+		  chartInsulinCarbs.data.datasets[0].data.push({x: t, y: u.iir});
+		  chartInsulinCarbs.data.datasets[1].data
               .push({x:t});
 		  if (u.ibolus > 0) {
-		  chartInsulinCarbs.data.datasets[0].data
+		  chartInsulinCarbs.data.datasets[1].data
               .push({x:t.valueOf(), y:u.ibolus});
 		  }
 		}
