@@ -1,18 +1,18 @@
 <template>
   <ContentContainer>
     <h1>Modell</h1>
+    <h2>Deine Eingaben</h2>
     <div class="model-row">
-      <div class="grid grid-cols-3">
-        <h1>Deine Eingaben</h1>
-        <div class="col-start-1"></div>
-      </div>
-      <div class="circle-container col-start-2">
+      <div class="circle-container col-start-3">
         <div @click="toggleCircle('meal')" ref="meal" class="circle focused-circle">
           <div class="content">
             <p>{{ this.circles['meal'].firstLine }}</p>
             <p>{{ this.circles['meal'].secondLine }}</p>
           </div>
         </div>
+      </div>
+      <div class="circle-container">
+        <i class="fa-solid fa-minus"></i>
       </div>
       <div class="circle-container">
         <div @click="toggleCircle('data')" ref="data" class="circle">
@@ -28,18 +28,19 @@
         <i class="fa-solid fa-arrow-down-long"></i>
       </div>
     </div>
+    <h2>Berechnungen</h2>
     <div class="model-row">
-      <div class="grid grid-cols-3">
-        <h1 class="z-10">Berechnungen</h1>
-        <div class="circle-container">
-          <div @click="toggleCircle('calcInsulin')" ref="calcInsulin" class="circle">
-            <div class="content">
-              <p>{{ this.circles['calcInsulin'].firstLine }}</p>
-              <p>{{ this.circles['calcInsulin'].secondLine }}</p>
-              <p>{{ this.circles['calcInsulin'].thirdLine }}</p>
-            </div>
+      <div class="circle-container col-start-1">
+        <div @click="toggleCircle('calcInsulin')" ref="calcInsulin" class="circle">
+          <div class="content">
+            <p>{{ this.circles['calcInsulin'].firstLine }}</p>
+            <p>{{ this.circles['calcInsulin'].secondLine }}</p>
+            <p>{{ this.circles['calcInsulin'].thirdLine }}</p>
           </div>
         </div>
+      </div>
+      <div class="circle-container">
+        <i class="fa-solid fa-minus"></i>
       </div>
       <div class="circle-container">
         <div @click="toggleCircle('calcGlucose')" ref="calcGlucose" class="circle">
@@ -58,18 +59,19 @@
         <i class="fa-solid fa-arrow-up-long"></i>
       </div>
     </div>
+    <h2>Anpassungen</h2>
     <div class="model-row">
-      <div class="grid grid-cols-3">
-        <h1 class="z-10">Anpassungen</h1>
-        <div class="circle-container">
-          <div @click="toggleCircle('injectInsulin')" ref="injectInsulin" class="circle min-w-max">
-            <div class="content">
-              <p>{{ this.circles['injectInsulin'].firstLine }}</p>
-              <p>{{ this.circles['injectInsulin'].secondLine }}</p>
-              <p>{{ this.circles['injectInsulin'].thirdLine }}</p>
-            </div>
+      <div class="circle-container">
+        <div @click="toggleCircle('injectInsulin')" ref="injectInsulin" class="circle">
+          <div class="content">
+            <p>{{ this.circles['injectInsulin'].firstLine }}</p>
+            <p>{{ this.circles['injectInsulin'].secondLine }}</p>
+            <p>{{ this.circles['injectInsulin'].thirdLine }}</p>
           </div>
         </div>
+      </div>
+      <div class="circle-container">
+        <i class="fa-solid fa-minus"></i>
       </div>
       <div class="circle-container">
         <div @click="toggleCircle('checkGlucose')" ref="checkGlucose"  class="circle">
@@ -79,6 +81,9 @@
             <p>{{ this.circles['checkGlucose'].thirdLine }}</p>
           </div>
         </div>
+      </div>
+      <div class="circle-container">
+        <i class="fa-solid fa-minus"></i>
       </div>
       <div class="circle-container">
         <div @click="toggleCircle('adjustBasal')" ref="adjustBasal" class="circle">
@@ -160,14 +165,14 @@ export default {
 <style scoped>
   .model-row {
     background-color: var(--blue-light);
-    @apply grid grid-cols-3 rounded-lg;
+    @apply grid grid-cols-model rounded-lg;
   }
   .circle-container {
     @apply flex justify-center my-auto;
   }
   .circle {
     background-color: var(--blue-medium);
-    @apply rounded-full md:h-28 md:w-28 h-20 w-20 text-center flex my-2;
+    @apply rounded-full md:h-28 md:w-28 h-24 w-24 text-center flex my-2;
   }
   .circle .content {
     @apply my-auto mx-auto;
