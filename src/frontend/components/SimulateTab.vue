@@ -1,5 +1,6 @@
 <template>
   <div class="sidebarNav grid absolute right-0 h-full top-0">
+
     <div ref="tabMeals" class="sidebarItem active" @click="setActiveTab('tabMeals')">
       <i class="fa-solid fa-apple-whole"></i>
       <p>Mahlzeiten</p>
@@ -13,6 +14,7 @@
       <p>Therapie</p>
     </div>
     <div ref="tabPatient" class="sidebarItem" @click="setActiveTab('tabPatient')">
+
       <i class="fa-solid fa-user"></i>
       <p>Patient:in</p>
     </div>
@@ -106,7 +108,7 @@ input{
   @apply rounded p-2;
 }
 
-.sidebarItem{
+.tab-btn{
   background-color: var(--blue-medium);
   color: var(--blue-grey);
   border-bottom: 1px solid;
@@ -114,7 +116,7 @@ input{
   @apply w-24 text-center my-auto h-full;
 }
 
-.sidebarItem.active{
+.active{
   background-color: var(--blue-grey);
   color: var(--blue-medium);
 }
