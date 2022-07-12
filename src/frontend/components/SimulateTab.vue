@@ -54,15 +54,35 @@
     </div>
 
     <div v-if="this.activeTab==='tabMeals'">
-      <div v-for="meal in this.meals" class="singleMeal">
-        <div>
-          <p>{{ meal.actual.start.toLocaleString() }}</p>
-          <p> Ankündigung: <span v-if="meal.announcement">{{meal.announcement.start.toLocaleString()}}</span><span v-else>Nein</span></p>
+      <div v-for="(meal,index) in this.meals" class="singleMeal">
+        <div class="grid grid-flow-col justify-between items-center">
+          <h1>Mahlzeit #{{index+1}}</h1>
+          <div v-if="!meal.edit" @click="setMealEditMode(index, true)">
+            <i class="fa-solid fa-pen"></i>
+          </div>
+          <div v-else class="grid grid-flow-col space-x-6 items-center">
+            <i class="fa-solid fa-trash" @click="deleteMeal(index)"></i>
+            <i class="fa-solid fa-floppy-disk" @click="setMealEditMode(index, false); saveMeal(index, meal)"></i>
+          </div>
         </div>
-        <input id="carbs" v-model="meal.actual.carbs" type="number" placeholder="Kohlenhydrate in g">
-        <label for="carbs">Kohlenhydrate in g</label>
-        <input id="abstand" type="number" placeholder="Ankündigungsabstand">
-        <label for="abstand">Ankündigungsabstand</label>
+        <div v-if="!meal.edit">
+          <p><i class="fa-solid fa-clock"></i> {{ meal.actual.start.toLocaleString() }}</p>
+          <p><i class="fa-solid fa-bullhorn"></i> Ankündigung: <span v-if="meal.announcement">{{meal.announcement.start.toLocaleString()}}</span><span v-else>Nein</span></p>
+        </div>
+        <div v-else>
+          <div>
+            <label  for="carbs">Beginn</label>
+            <input class="col-span-2" id="carbs" @change="meal.actual.start = $event.target.valueAsDate" :value="meal.actual.start && meal.actual.start.toISOString().split('Z')[0]" type="datetime-local" placeholder="Kohlenhydrate in g">
+          </div>
+          <div class="grid grid-cols-3 items-center">
+            <label class="col-span-2" for="carbs">Kohlenhydrate in g</label>
+            <input class="max-w-min" id="carbs" v-model="meal.actual.carbs" type="number" placeholder="Kohlenhydrate in g">
+          </div>
+          <div class="grid grid-cols-3 items-center">
+            <label class="col-span-2" for="abstand">Ankündigungs-abstand</label>
+            <input id="abstand" type="number" placeholder="h">
+          </div>
+        </div>
       </div>
 
       <div class="addMealContainer" @click="addMeal()">
@@ -109,7 +129,7 @@ export default {
     addMeal(){
       let start, duration, carbs, announcement;
 
-      if(!this.meals){
+      if(this.meals.length === 0){
         duration = 15;
         carbs = 20;
         start = new Date(this.date + ' ' + this.time);
@@ -127,6 +147,7 @@ export default {
     },
     pushMeal(start, duration, carbs, announcement){
       let meal = {
+        edit: true,
         actual: {
           start: start,
           duration: duration,
@@ -137,6 +158,17 @@ export default {
 
       this.meals.push(meal);
       this.$store.dispatch("setMeals", this.meals)
+    },
+    setMealEditMode(idx, bool){
+      this.meals[idx].edit = bool;
+    },
+    saveMeal(idx, meal){
+      this.meals[idx] = meal;
+      this.$store.dispatch("setMeals", this.meals);
+    },
+    deleteMeal(idx){
+      this.meals.splice(idx, 1);
+      this.$store.dispatch("setMeals", this.meals);
     },
     setActiveTab(ref){
       this.activeTab = ref;
@@ -155,7 +187,13 @@ export default {
 <style scoped>
 
 .singleMeal{
-  @apply w-full bg-gray-200 p-4 my-2 rounded;
+  color: var(--blue-primary);
+  background-color: var(--blue-light);
+  @apply w-full p-4 my-2 rounded;
+}
+
+.singleMeal h1{
+  @apply font-medium text-lg;
 }
 
 .addMealContainer{
