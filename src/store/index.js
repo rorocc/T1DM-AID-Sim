@@ -76,6 +76,8 @@ export default createStore({
 
             state.input.timeRange.t0 = new Date(val[0].valueOf());
 
+            state.input.meals[0].actual.start = state.input.timeRange.t0;
+
             let date = val[0];
 
             let tMax = new Date(date.setTime(date.getTime() + val[1] * 60 * 60 * 1000));

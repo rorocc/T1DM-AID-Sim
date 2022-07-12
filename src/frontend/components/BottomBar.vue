@@ -2,7 +2,9 @@
   <div class="bottom fixed bottom-0 w-full h-1/2">
     <div v-if="this.isDialogOpen" class="bottom-dialog h-full"> <!-- Bottom Dialog Screens -->
       <BottomBarContent v-if="this.currentDialog === 'tabScenario'">
-        <div @click="toggleDialog(0)" class="closer"></div>
+        <div class="closerContainer"  @click="toggleDialog(0)">
+          <div class="closer"></div>
+        </div>
         <div class="grid grid-rows-2 space-y-1">
           <div class="flex justify-around">
             <div class="scenario-block">
@@ -35,11 +37,16 @@
         </div>
       </BottomBarContent>
       <BottomBarContent v-if="this.currentDialog === 'tabCompare'">
-        <div @click="toggleDialog(0)" class="closer"></div>
+        <div class="closerContainer"  @click="toggleDialog(0)">
+          <div class="closer"></div>
+        </div>
         <p>Sim</p>
       </BottomBarContent>
       <BottomBarContent v-if="this.currentDialog === 'tabSimulate'">
-        <div @click="toggleDialog(0)" class="closer"></div>
+        <div class="closerContainer"  @click="toggleDialog(0)">
+          <div class="closer"></div>
+        </div>
+
         <SimulateTab></SimulateTab>
       </BottomBarContent>
     </div>
@@ -125,8 +132,12 @@ i{
   @apply text-2xl;
 }
 
+.closerContainer{
+  @apply w-full h-4;
+}
+
 .closer{
-  @apply w-1/12 bg-blue-100 h-1 rounded-full absolute left-1/2 cursor-pointer;
+  @apply w-3/12 bg-blue-100 h-1 rounded-full mx-auto cursor-pointer;
 }
 
 .bottom-dialog{
