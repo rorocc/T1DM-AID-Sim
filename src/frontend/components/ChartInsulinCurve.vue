@@ -43,7 +43,7 @@ export default {
 			label: this.$t("ibolus"), 
 			backgroundColor: colors['THURed'], 
 			radius: 10, 
-			pointStyle: "triangle", 
+			pointStyle: "circle", 
 			rotation: 180,
 		    data: [],},
 			/*{
@@ -61,7 +61,7 @@ export default {
 			label: this.$t("totalmeal"), 
 			borderColor: colors['THUAnthrazit'], 
 			backgroundColor: colors['THUDarkBlue'], 
-			radius: 10, pointStyle: "triangle",
+			radius: 10, pointStyle: "circle",
 			data: [],},
 		  /*{	
 			type: "line", 
@@ -177,7 +177,6 @@ export default {
 			position: 'bottom',
 			labels:{
 				usePointStyle: true,
-				pointStyle: 'circle',
 			}
 		  },
 		  tooltip: {
