@@ -34,6 +34,7 @@ class Simulator {
 					meal.actual.start = new Date(meal.actual.start)
 				}
 			}
+
 			if (typeof meal.announcement !== "undefined") {
 				if (typeof meal.announcement.start !== "undefined") {
 					meal.announcement.start = new Date(meal.announcement.start)

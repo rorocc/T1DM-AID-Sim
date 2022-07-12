@@ -27,12 +27,7 @@ export default createStore({
                       start: new Date(2022,5,1,8,0,0),
                       duration: 15,
                       carbs: 20,
-                  },
-                  announcement: {
-                      start: new Date(2022,5,1,8,0,0),
-                      carbs: 20,
-                      time: new Date(2022,5,1,7,0,0),
-                  },
+                  }
               }],
             timeRange: {
                 "hours": 8,
@@ -121,6 +116,7 @@ export default createStore({
         },
         setMeals({commit},meals){
           commit("SET_MEALS",meals);
+          commit("CALC_AVG_STATS");
         },
         setTime({commit}, val){
             commit("SET_TIME", val)
@@ -129,8 +125,8 @@ export default createStore({
           commit("SET_FLAG", bool);
         },
         setResults({commit}, newValue){
-            commit("SET_RESULTS", newValue);
             commit("RESET_COMPUTEDSTATS");
+            commit("SET_RESULTS", newValue);
 
             for (const result of newValue) {
                 commit("PUSH_RECORD", result);

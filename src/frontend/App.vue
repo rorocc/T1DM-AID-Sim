@@ -62,7 +62,9 @@ export default {
 
       sim.setOptions(this.$store.getters.input.timeRange)
 
+      console.log("USED MEALS", this.$store.getters.input.meals)
       sim.runSimulation();
+      this.$store.dispatch("resetComputedStats");
       this.$store.dispatch("setResults",sim.getSimulationResults());
 
       console.log("AFTER", this.$store.getters.input.meals)

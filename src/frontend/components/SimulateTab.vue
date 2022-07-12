@@ -73,10 +73,11 @@
           </div>
           <div v-if="!meal.edit">
             <p><i class="fa-solid fa-clock"></i> {{ meal.actual.start.toLocaleString() }}</p>
+            <p><i class="fa-solid fa-bread-slice"></i> {{ meal.actual.carbs }} Kohlenhydrate</p>
             <p><i class="fa-solid fa-bullhorn"></i> Ankündigung: <span v-if="meal.announcement">{{meal.announcement.start.toLocaleString()}}</span><span v-else>Nein</span></p>
           </div>
           <div v-else>
-            <div>
+            <div class="mb-2">
               <label  for="carbs">Beginn</label>
               <input class="col-span-2" id="carbs" @change="meal.actual.start = $event.target.valueAsDate" :value="meal.actual.start && meal.actual.start.toISOString().split('Z')[0]" type="datetime-local" placeholder="Kohlenhydrate in g">
             </div>
@@ -84,10 +85,22 @@
               <label class="col-span-2" for="carbs">Kohlenhydrate in g</label>
               <input class="max-w-min" id="carbs" v-model="meal.actual.carbs" type="number" placeholder="Kohlenhydrate in g">
             </div>
-            <div class="grid grid-cols-3 items-center">
-              <label class="col-span-2" for="abstand">Ankündigungs-abstand</label>
-              <input id="abstand" type="number" placeholder="h">
+            <div v-if="meal.announcement !== undefined" class="grid space-y-2">
+              <h2 @click="()=>{meal.announcement = undefined}">x Ankündigung</h2>
+              <div class="grid grid-cols-3 items-center">
+                <label class="col-span-2" for="abstand_ank">Abstand</label>
+                <input id="abstand_ank" type="number" placeholder="h">
+              </div>
+              <div class="grid grid-cols-3 items-center">
+                <label >Beginn</label>
+                <input class="col-span-2" id="beginn_ank" v-model="meal.announcement.start" type="date" placeholder="h">
+                <input class="col-span-2" id="beginn_ank" v-model="meal.announcement.start" type="time" placeholder="h">
+              </div>
             </div>
+            <div v-else>
+              <h2 class="my-2" @click="()=>{meal.announcement = {}}">+ Ankündigung hinzufügen</h2>
+            </div>
+
           </div>
         </div>
 
@@ -134,6 +147,16 @@ export default {
     },
   },
   methods: {
+    spliceDate(date){
+      let dateTemp = date;
+      return dateTemp.toISOString().split('Z')[0]
+    },
+    getDateFormat(date){
+      let dateF = date.toISOString().split('T')[0];
+      let timeF = date.toLocaleTimeString();
+      let temp = new Date(dateF + ' ' + timeF);
+      return new Date(temp.valueOf());
+    },
     addMeal(){
       let start, duration, carbs, announcement;
 
@@ -202,6 +225,10 @@ export default {
 
 .singleMeal h1{
   @apply font-medium text-lg;
+}
+
+.singleMeal h2{
+  @apply font-medium pt-2;
 }
 
 .addMealContainer{

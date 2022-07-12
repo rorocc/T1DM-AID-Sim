@@ -40,7 +40,13 @@
         <div class="closerContainer"  @click="toggleDialog(0)">
           <div class="closer"></div>
         </div>
-        <p>Sim</p>
+        <div class="w-full">
+          <div class="mx-auto border-blue-900 border rounded-xl flex items-center w-2/3 text-blue-900 space-x-2 justify-center text-center">
+            <i class="fa-solid fa-floppy-disk"></i> <p>Simulation speichern</p>
+          </div>
+        </div>
+
+        <SimulationEntry></SimulationEntry>
       </BottomBarContent>
       <BottomBarContent v-if="this.currentDialog === 'tabSimulate'">
         <div class="closerContainer"  @click="toggleDialog(0)">
@@ -64,13 +70,14 @@
 <script>
 import BottomBarContent from "./BottomBarContent.vue";
 import SimulateTab from "./SimulateTab.vue";
+import SimulationEntry from "./SimulationEntry.vue";
 
 export default {
-  components: {BottomBarContent, SimulateTab},
+  components: {BottomBarContent, SimulateTab, SimulationEntry},
   data(){
     return{
-      isDialogOpen: true,
-      currentDialog: "tabSimulate"
+      isDialogOpen: false,
+      currentDialog: ""
     }
   },
   methods: {
@@ -123,7 +130,7 @@ export default {
               time: new Date(2022,5,1,11,30,0),
             },
           }]
-
+      console.log("PUSHED:", this.meals);
       this.$store.dispatch("setMeals", meals);
       this.$store.dispatch("setTimeRange", timeRange)
     }
