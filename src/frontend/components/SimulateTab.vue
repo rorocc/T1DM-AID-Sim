@@ -31,69 +31,75 @@
   </div>
 
   <div class="container w-2/3">
-  <div v-if="this.activeTab==='tabPatient'">
-    <input type="text" placeholder="Alter">
-    <input type="text" placeholder="Gewicht">
-  </div>
-
-
-  <div>
-    <div v-if="this.activeTab==='tabTime'" class="grid grid-flow-row justify-between space-y-2 w-full">
+    <div v-if="this.activeTab==='tabPatient'" style="background-color: var(--blue-light);" class="p-4 my-2 rounded">
+      <!-- TODO alles bisher ohne Auswirkungen -->
       <div class="grid grid-flow-col justify-between">
-        <label for="date">Beginn</label>
-        <input id="date" v-model.lazy="date" type="date" placeholder="Beginn">
+        <label for="age">Alter</label>
+        <input id="age" v-model.lazy="age" type="number" placeholder="Alter" class="w-20">
       </div>
       <div class="grid grid-flow-col justify-between">
-        <label for="time">Zeitpunkt</label>
-        <input id="time" v-model.lazy="time" type="time" placeholder="Zeitpunkt">
-      </div>
-      <div class="grid grid-flow-col justify-between">
-        <label for="hours">Zeitraum in h</label>
-        <input id="hours" v-model.lazy="hours" type="number" placeholder="Zeitraum in h">
+        <label for="weight">Gewicht in kg</label>
+        <input id="weight" v-model.lazy="weight" type="number" class="w-20">
       </div>
     </div>
 
-    <div v-if="this.activeTab==='tabMeals'">
-      <div v-for="(meal,index) in this.meals" class="singleMeal">
-        <div class="grid grid-flow-col justify-between items-center">
-          <h1>Mahlzeit #{{index+1}}</h1>
-          <div v-if="!meal.edit" @click="setMealEditMode(index, true)">
-            <i class="fa-solid fa-pen"></i>
-          </div>
-          <div v-else class="grid grid-flow-col space-x-6 items-center">
-            <i class="fa-solid fa-trash" @click="deleteMeal(index)"></i>
-            <i class="fa-solid fa-floppy-disk" @click="setMealEditMode(index, false); saveMeal(index, meal)"></i>
-          </div>
+    <div>
+      <div v-if="this.activeTab==='tabTime'" style="background-color: var(--blue-light);" class="p-4 my-2 rounded">
+        <div class="grid grid-flow-col justify-between">
+          <label for="date">Beginn</label>
+          <input id="date" v-model.lazy="date" type="date" placeholder="Beginn">
         </div>
-        <div v-if="!meal.edit">
-          <p><i class="fa-solid fa-clock"></i> {{ meal.actual.start.toLocaleString() }}</p>
-          <p><i class="fa-solid fa-bullhorn"></i> Ankündigung: <span v-if="meal.announcement">{{meal.announcement.start.toLocaleString()}}</span><span v-else>Nein</span></p>
+        <div class="grid grid-flow-col justify-between">
+          <label for="time">Zeitpunkt</label>
+          <input id="time" v-model.lazy="time" type="time" placeholder="Zeitpunkt">
         </div>
-        <div v-else>
-          <div>
-            <label  for="carbs">Beginn</label>
-            <input class="col-span-2" id="carbs" @change="meal.actual.start = $event.target.valueAsDate" :value="meal.actual.start && meal.actual.start.toISOString().split('Z')[0]" type="datetime-local" placeholder="Kohlenhydrate in g">
-          </div>
-          <div class="grid grid-cols-3 items-center">
-            <label class="col-span-2" for="carbs">Kohlenhydrate in g</label>
-            <input class="max-w-min" id="carbs" v-model="meal.actual.carbs" type="number" placeholder="Kohlenhydrate in g">
-          </div>
-          <div class="grid grid-cols-3 items-center">
-            <label class="col-span-2" for="abstand">Ankündigungs-abstand</label>
-            <input id="abstand" type="number" placeholder="h">
-          </div>
+        <div class="grid grid-flow-col justify-between">
+          <label for="hours">Zeitraum in h</label>
+          <input id="hours" v-model.lazy="hours" type="number" placeholder="Zeitraum in h" class="w-20">
         </div>
       </div>
 
-      <div class="addMealContainer" @click="addMeal()">
-        <div class="addMealButton">
-          <i class="fa-solid fa-plus"></i>
+      <div v-if="this.activeTab==='tabMeals'">
+        <div v-for="(meal,index) in this.meals" class="singleMeal">
+          <div class="grid grid-flow-col justify-between items-center">
+            <h1>Mahlzeit #{{index+1}}</h1>
+            <div v-if="!meal.edit" @click="setMealEditMode(index, true)">
+              <i class="fa-solid fa-pen"></i>
+            </div>
+            <div v-else class="grid grid-flow-col space-x-6 items-center">
+              <i class="fa-solid fa-trash" @click="deleteMeal(index)"></i>
+              <i class="fa-solid fa-floppy-disk" @click="setMealEditMode(index, false); saveMeal(index, meal)"></i>
+            </div>
+          </div>
+          <div v-if="!meal.edit">
+            <p><i class="fa-solid fa-clock"></i> {{ meal.actual.start.toLocaleString() }}</p>
+            <p><i class="fa-solid fa-bullhorn"></i> Ankündigung: <span v-if="meal.announcement">{{meal.announcement.start.toLocaleString()}}</span><span v-else>Nein</span></p>
+          </div>
+          <div v-else>
+            <div>
+              <label  for="carbs">Beginn</label>
+              <input class="col-span-2" id="carbs" @change="meal.actual.start = $event.target.valueAsDate" :value="meal.actual.start && meal.actual.start.toISOString().split('Z')[0]" type="datetime-local" placeholder="Kohlenhydrate in g">
+            </div>
+            <div class="grid grid-cols-3 items-center">
+              <label class="col-span-2" for="carbs">Kohlenhydrate in g</label>
+              <input class="max-w-min" id="carbs" v-model="meal.actual.carbs" type="number" placeholder="Kohlenhydrate in g">
+            </div>
+            <div class="grid grid-cols-3 items-center">
+              <label class="col-span-2" for="abstand">Ankündigungs-abstand</label>
+              <input id="abstand" type="number" placeholder="h">
+            </div>
+          </div>
         </div>
-        <p>Mahlzeit hinzufügen</p>
+
+        <div class="addMealContainer" @click="addMeal()">
+          <div class="addMealButton">
+            <i class="fa-solid fa-plus"></i>
+          </div>
+          <p>Mahlzeit hinzufügen</p>
+        </div>
       </div>
+
     </div>
-
-  </div>
   </div>
 </template>
 
@@ -109,6 +115,8 @@ export default {
       time: new Date().toLocaleTimeString(),
       hours: 8,
       meals: this.$store.getters.input.meals,
+      weight: 75,
+      age: 20,
     }
   },
   watch: {
