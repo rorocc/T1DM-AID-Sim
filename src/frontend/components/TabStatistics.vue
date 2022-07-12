@@ -27,7 +27,7 @@
     <div class="space-y-3">
       <div class="bar-container">
         <div class="tir_bar">
-          <div class="tir_progressHigh" :style="{ width: this.getTirPercentage(this.$store.getters.computedStats.tir_high) + '%'}">
+          <div class="tir_progressHigh" :style="{ width: this.getTirPercentage(this.$store.getters.computedStats.tir_high) + this.getTirPercentage(this.$store.getters.computedStats.tir_veryhigh) + '%'}">
             <p>{{ getTimeString(this.$store.getters.computedStats.tir_high) }}</p>
           </div>
         </div>
@@ -47,7 +47,7 @@
       </div>
       <div class="bar-container">
         <div class="tir_bar">
-          <div class="tir_progressLow" :style="{ width: this.getTirPercentage(this.$store.getters.computedStats.tir_low) + '%'}">
+          <div class="tir_progressLow" :style="{ width: this.getTirPercentage(this.$store.getters.computedStats.tir_low) + this.getTirPercentage(this.$store.getters.computedStats.tir_verylow) + '%'}">
             <p>{{ getTimeString(this.$store.getters.computedStats.tir_low) }}</p>
           </div>
         </div>
