@@ -11,142 +11,142 @@
 
 import Chart from 'chart.js/auto';
 import colors from '../Colors.js';
+import 'chartjs-adapter-moment';
 
-var chartInsulinCarbs;
+let chartInsulinCarbs;
 
 export default {
-	emits: ["selectLog"],
+	name: "ChartInsulinCurve",
 	data() {
 		return {
-			boxactive: false,
 			currentDatasetID: 1,
-			controllerOutput: [],
 		}
 	},
-	mounted() {
-		
-		const ctx = document.getElementById("canvas_curves_insulin");
-		
-		chartInsulinCarbs = new Chart(ctx, {
-			data: {
-				datasets: [
-					{
-						type: "line", 
-						yAxisID: 'y', 
-						label: this.$t("iir"), 
-						borderColor: colors['THURed'], 
-						spanGaps: true, 
-						stepped: "before",},
-					{
-						type: "scatter", 
-						yAxisID: 'y', 
-						label: this.$t("ibolus"), 
-						backgroundColor: colors['THURed'], 
-						borderColor: colors['THUAnthrazit'], 
-						radius: 10, 
-						pointStyle: "triangle", 
-						rotation: 180
-					},
-					{
-						type: "scatter", 
-						yAxisID: 'y', 
-						label: this.$t("iob"), 
-						borderColor: colors['THUGreen'], 
-						backgroundColor: colors['THUGreen'], 
-						radius: 2, 
-						pointStyle: "circle"
-					},
-					{
-						type: "scatter", 
-						yAxisID: 'yG', 
-						label: this.$t("totalmeal"), 
-						borderColor: colors['THUAnthrazit'], 
-						backgroundColor: colors['THUDarkBlue'], 
-						radius: 10, pointStyle: "triangle"
-					},
-					{
-						type: "line", 
-						yAxisID: 'yG', 
-						label: this.$t("carbspermin"), 
-						borderColor: colors['THUDarkBlue'], 
-						stepped: "before"
-					},
-				],
-			},
-			options: {
-				layout: {
-		            padding: {right: 20},
-		        },
-				scales: {
-					x: {
-						type: "time",
-						offset: false,
-						time: {unit: 'hour'},
-					},
-					y: {
-						title: {display: true, text: "U, U/h"},
-						min: 0, 
-						ticks: {stepSize: 1},
-						suggestedMax: 3, 
-					},
-					yG: {
-						title: {display: true, text: "g, g/min"}, 
-						position: 'right',
-						min: 0,
-						suggestedMax: 30,
-						ticks: {stepSize: 10},
-						grid: { drawOnChartArea: false},
-					},
-				},
-				plugins: {
-					tooltip: {
-						callbacks: {
-							afterBody: (context) => {
-								let t0 = context[0].parsed.x;
-								let output = this.controllerOutput[t0];
-								this.$emit("selectLog", t0, output);
-							},
-						},
-					},
-				},
-			},
-		});
-	},
 	methods: {
-		setSimulationResults(simResults) {
-			this.reset()
-			for (const result of simResults) {
-				const {t, x, u, y, logData} = result
-				this._pushRecord(t.valueOf(), x, u, y, logData)
-			}
-			this._update
-		},
-		reset() {
-			let datasets = chartInsulinCarbs.data.datasets;
-			for (let i=0; i<datasets.length; i++) {
-				datasets[i].data = [];
-			}
-			this.controllerOutput = [];
-		},
-		_pushRecord(t, _x, u, _y, log)  {
-			let datasets = chartInsulinCarbs.data.datasets;
-			datasets[0].data.push({x: t, y: u.iir});
-			if (u.ibolus > 0) {
-				datasets[1].data.push({x:t, y: u.ibolus});
-			}
-			if (typeof log !== "undefined") {
-				datasets[2].data.push({x:t, y:log.IOB});
-			}
-			this.controllerOutput[t] = log; 
+	  createDataset(){
+        chartInsulinCarbs.data.datasets = [];
+        
+		chartInsulinCarbs.data.datasets.push({
+          	type: "scatter", 
+			label: this.$t("ibolus"), 
+			backgroundColor: colors['THURed'], 
+			radius: 10, 
+			pointStyle: "triangle", 
+			rotation: 180,
+		    data: [],
+	    });
+       
+	    let simResults = JSON.parse(JSON.stringify(this.$store.getters.results))
+     
+	    for (const result of simResults) {
+          const {t, x, u, y, logData} = result
+          chartInsulinCarbs.data.datasets[0].data
+              .push({x:t.valueOf(), y:u.ibolus});
+        }
+        chartInsulinCarbs.update();
+      }
 
-			datasets[3].data.push({x:t, y: u.meal});
-			datasets[4].data.push({x:t, y: u.carbs});
+	},
+
+  computed: {
+    results(){
+      return this.$store.getters.results;
+    }
+  },
+  watch:{
+    results (newResults, oldResults){
+      console.log("UPDATE RESULTS")
+      this.createDataset();
+    }
+  },
+  mounted() {
+	
+	const ctx = document.getElementById("canvas_curves_insulin");
+
+	chartInsulinCarbs = new Chart(ctx, {
+      data: {
+	    datasets: [
+		  {
+			type: "line", 
+		    yAxisID: 'y', 
+			label: this.$t("iir"), 
+			borderColor: colors['THURed'], 
+			spanGaps: true, 
+			stepped: "before",},
+		  {
+			type: "scatter", 
+			yAxisID: 'y', 
+			label: this.$t("ibolus"), 
+			backgroundColor: colors['THURed'], 
+			borderColor: colors['THUAnthrazit'], 
+			radius: 10, 
+			pointStyle: "triangle", 
+			rotation: 180},
+		  {
+			type: "scatter", 
+			yAxisID: 'y', 
+			label: this.$t("iob"), 
+			borderColor: colors['THUGreen'], 
+			backgroundColor: colors['THUGreen'], 
+			radius: 2, 
+			pointStyle: "circle"},
+		  {
+			type: "scatter", 
+			yAxisID: 'yG', 
+			label: this.$t("totalmeal"), 
+			borderColor: colors['THUAnthrazit'], 
+			backgroundColor: colors['THUDarkBlue'], 
+			radius: 10, pointStyle: "triangle"},
+		  {	
+			type: "line", 
+			yAxisID: 'yG', 
+			label: this.$t("carbspermin"), 
+			borderColor: colors['THUDarkBlue'], 
+			stepped: "before"},
+		],
+	  },
+	  options: {
+		layout: {
+	        padding: {right: 20},
+	    },
+	    scales: {
+		  x: {
+		    type: "time",
+			offset: false,
+			time: {unit: 'hour'},
+		  },
+		  y: {
+			title: {display: true, text: "U, U/h"},
+			min: 0, 
+			ticks: {stepSize: 1},
+			suggestedMax: 3, 
+		  },
+		  yG: {
+			title: {display: true, text: "g, g/min"}, 
+			position: 'right',
+			min: 0,
+			suggestedMax: 30,
+			ticks: {stepSize: 10},
+			grid: { drawOnChartArea: false},
+		  },
 		},
-		_update(){
-			chartInsulinCarbs.update();
+		plugins: {
+		  tooltip: {
+		    callbacks: {
+			  afterBody: (context) => {
+			    let t0 = context[0].parsed.x;
+				let output = this.controllerOutput[t0];
+				this.$emit("selectLog", t0, output);
+			  },
+			},
+		  },
 		},
 	},
+    });
+	this.createDataset();
+  },	
 }
+
 </script>
 
 <i18n locale="en">
