@@ -1,5 +1,8 @@
 <template>
-  <canvas id="canvas_curves_insulin"></canvas>
+	<div style="position: relative; height:40vh;">
+		<canvas id="canvas_curves_insulin"></canvas>
+	</div>
+
 </template>
 
 
@@ -147,6 +150,7 @@ export default {
 		], */
 	  },
 	  options: {
+		maintainAspectRatio: false,
 	    scales: {
 		  x: {
 		    type: "time",
