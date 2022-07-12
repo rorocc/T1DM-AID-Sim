@@ -40,9 +40,13 @@ export default {
      
 	    for (const result of simResults) {
           const {t, x, u, y, logData} = result
-          chartInsulinCarbs.data.datasets[0].data
+		  chartInsulinCarbs.data.datasets[0].data
+              .push({x:t});
+		  if (u.ibolus > 0) {
+		  chartInsulinCarbs.data.datasets[0].data
               .push({x:t.valueOf(), y:u.ibolus});
-        }
+		  }
+		}
         chartInsulinCarbs.update();
       }
 
