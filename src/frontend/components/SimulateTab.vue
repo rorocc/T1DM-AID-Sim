@@ -19,10 +19,6 @@
   </div>
 
 <div v-show="this.activeTab === 'sideMeals'">
-  <div>
-    <input type="text" placeholder="Alter">
-    <input type="text" placeholder="Gewicht">
-  </div>
 
   {{ this.$store.getters.input.timeRange.tmax}}
   <div>
@@ -47,7 +43,10 @@
 </div>
 
 <div v-if="this.activeTab === 'sidePatient'">
-  <p> test </p>
+  <div>
+    <input type="text" placeholder="Alter">
+    <input type="text" placeholder="Gewicht">
+  </div>
 </div>
 
 </template>
