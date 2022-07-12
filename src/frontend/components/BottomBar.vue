@@ -1,6 +1,6 @@
 <template>
-  <div class="bottom fixed bottom-0 w-full h-1/2 mb-14">
-    <div v-if="this.isDialogOpen" class="bottom-dialog h-full"> <!-- Bottom Dialog Screens -->
+  <div class="bottom fixed bottom-0 w-full h-1/2 mb-14 pointer-events-none">
+    <div v-if="this.isDialogOpen" class="bottom-dialog h-full" :class="[isDialogOpen ? 'pointer-events-auto' : 'pointer-events-none']"> <!-- Bottom Dialog Screens -->
       <BottomBarContent v-if="this.currentDialog === 'tabScenario'">
         <div class="closerContainer"  @click="toggleDialog(0)">
           <div class="closer"></div>
@@ -50,7 +50,7 @@
         <SimulateTab></SimulateTab>
       </BottomBarContent>
     </div>
-    <div class="tab-container block inset-x-0 z-10 bottom-0 fixed bg-white"> <!-- Bottom Nav Bar -->
+    <div class="tab-container block inset-x-0 z-10 bottom-0 fixed bg-white pointer-events-auto"> <!-- Bottom Nav Bar -->
       <div class="grid grid-cols-3">
         <div class="tab-btn" ref="tabScenario" @click="setDialogType('tabScenario')">Szenarien</div>
         <div class="tab-btn" ref="tabCompare" @click="setDialogType('tabCompare')">Vergleichen</div>
