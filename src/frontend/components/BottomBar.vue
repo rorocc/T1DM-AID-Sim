@@ -11,7 +11,7 @@
               <p>Aufstehen</p>
               <i class="fa-solid fa-sun"></i>
             </div>
-            <div class="scenario-block">
+            <div class="scenario-block" @click="runDoubleMealScenario">
               <p>Doppelte Mahlzeit</p>
               <i class="fa-solid fa-bowl-food"></i>
             </div>
@@ -91,6 +91,10 @@ export default {
     },
     toggleDialog(bool){
       console.log(this.isDialogOpen)
+      if(!bool){
+        this.setActive();
+        this.currentDialog = "";
+      }
       this.isDialogOpen = bool;
     },
     setActive(ref){
@@ -99,6 +103,29 @@ export default {
       this.$refs['tabScenario'].classList.remove('active');
 
       if(ref) this.$refs[ref].classList.add('active');
+    },
+    runDoubleMealScenario(){
+      let timeRange = {
+            "hours": 8,
+            "t0": new Date(2022,5,1,11,0,0),
+            "tmax": new Date(2022,5,1,19,0,0),
+          };
+      let meals = [{
+            edit: false,
+            actual: {
+              start: new Date(2022,5,1,12,30,0),
+              duration: 15,
+              carbs: 60,
+            },
+            announcement: {
+              start: new Date(2022,5,1,12,15,0),
+              carbs: 30,
+              time: new Date(2022,5,1,11,30,0),
+            },
+          }]
+
+      this.$store.dispatch("setMeals", meals);
+      this.$store.dispatch("setTimeRange", timeRange)
     }
   }
 }

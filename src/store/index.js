@@ -9,6 +9,7 @@ export default createStore({
 
             },
           meals: [{
+                edit: false,
               actual: {
                   start: new Date(2022,5,1,8,0,0),
                   duration: 15,
@@ -19,7 +20,20 @@ export default createStore({
                   carbs: 20,
                   time: new Date(2022,5,1,7,0,0),
               },
-          },],
+          },
+              {
+                  edit: false,
+                  actual: {
+                      start: new Date(2022,5,1,8,0,0),
+                      duration: 15,
+                      carbs: 20,
+                  },
+                  announcement: {
+                      start: new Date(2022,5,1,8,0,0),
+                      carbs: 20,
+                      time: new Date(2022,5,1,7,0,0),
+                  },
+              }],
             timeRange: {
                 "hours": 8,
                 "t0": new Date(2022,5,1,6,0,0),
@@ -95,9 +109,16 @@ export default createStore({
             console.log("SET_MEALS", meals)
             state.input.meals = meals;
             state.runSimFlag = true; // SETTING FLAG
+        },
+        SET_TIMERANGE(state, tr){
+            state.input.timeRange = tr;
+            state.runSimFlag = true; // SETTING FLAG
         }
     },
     actions: {
+        setTimeRange({commit}, tr){
+          commit("SET_TIMERANGE",tr)
+        },
         setMeals({commit},meals){
           commit("SET_MEALS",meals);
         },
