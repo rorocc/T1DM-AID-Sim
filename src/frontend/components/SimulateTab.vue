@@ -1,18 +1,22 @@
 <template>
   <div class="sidebarNav grid absolute right-0 h-full top-0">
     <div @click="toggleSidebar('sideMeals')" ref="sideMeals" class="tab-btn active">
+      <br />
       <i class="fa-solid fa-apple-whole"></i>
       <p>Mahlzeiten</p>
     </div>
     <div @click="toggleSidebar('sideTime')" ref="sideTime" class="tab-btn">
+      <br />
       <i class="fa-solid fa-clock"></i>
       <p>Zeitraum</p>
     </div>
     <div @click="toggleSidebar('sideTherapy')" ref="sideTherapy" class="tab-btn">
+      <br />
       <i class="fa-solid fa-syringe"></i>
       <p>Therapie</p>
     </div>
     <div @click="toggleSidebar('sidePatient')" ref="sidePatient" class="tab-btn">
+      <br />
       <i class="fa-solid fa-user"></i>
       <p>Patient:in</p>
     </div>
