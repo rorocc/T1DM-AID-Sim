@@ -49,10 +49,10 @@ app.use(VTooltip);
 const gui = app.mount('#app');
 
 // prepare simulator
-var sim = new Simulator();
+//var sim = new Simulator();
 
 
-// configure callback to run simulation
+/*// configure callback to run simulation
 gui.runSimulation = () => {
 	console.log("start simulation");
 
@@ -67,3 +67,4 @@ gui.runSimulation = () => {
 	gui.$refs.main.propagateSimulationResults(results)
 }
 
+*/

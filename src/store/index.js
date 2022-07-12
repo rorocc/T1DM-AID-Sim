@@ -3,9 +3,27 @@ import * as util from "../common/util.js";
 
 export default createStore({
     state: {
-        timeRange: {
-            "t0": new Date(2022,5,1,6,0,0),
-            "tmax": new Date(2022,5,1,18,0,0),
+        input: {
+            patient: {
+
+            },
+          meals: [{
+              actual: {
+                  start: new Date(2022,5,1,8,0,0),
+                  duration: 15,
+                  carbs: 20,
+              },
+              announcement: {
+                  start: new Date(2022,5,1,8,0,0),
+                  carbs: 20,
+                  time: new Date(2022,5,1,7,0,0),
+              },
+          },],
+            timeRange: {
+                "hours": 8,
+                "t0": new Date(2022,5,1,6,0,0),
+                "tmax": new Date(2022,5,1,18,0,0),
+            },
         },
         results: [{ "t": "2022-06-01T04:00:00.000Z", "x": { "Gp": 180, "Gt": 136.18855213996963, "Ip": 2.1160867725422206, "Il": 2.156181048232494, "Qsto1": 0, "Qsto2": 0, "Qgut": 0, "XL": 42.32173545084441, "I_": 42.32173545084441, "X": 0, "Isc1": 56.320463330739095, "Isc2": 50.75030761670995 }, "u": { "iir": 0.7687743244645887, "ibolus": 0, "carbs": 0, "meal": null }, "y": { "Gp": 95.74468085106383, "G": 95.74468085106383 } }],
         computedStats: {}
@@ -53,9 +71,22 @@ export default createStore({
             state.computedStats.glucoseVariability = Math.round(
                 100 * util.coefficientOfVariation(state.computedStats.G)
             );
+        },
+        SET_TIME(state, val){
+
+            state.input.timeRange.t0 = new Date(val[0].valueOf());
+
+            let date = val[0];
+
+            let tMax = new Date(date.setTime(date.getTime() + val[1] * 60 * 60 * 1000));
+
+            state.input.timeRange.tmax = new Date(tMax.valueOf())
         }
     },
     actions: {
+        setTime({commit}, val){
+            commit("SET_TIME", val)
+        },
         setResults({commit}, newValue){
             commit("SET_RESULTS", newValue);
             commit("RESET_COMPUTEDSTATS");
@@ -72,8 +103,11 @@ export default createStore({
         }
     },
     getters: {
+        input(state){
+            return state.input
+        },
         timeRange (state){
-            return state.timeRange;
+            return state.input.timeRange;
         },
         results(state){
             return state.results;

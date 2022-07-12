@@ -40,24 +40,7 @@
       </BottomBarContent>
       <BottomBarContent v-if="this.currentDialog === 'tabSimulate'">
         <div @click="toggleDialog(0)" class="closer"></div>
-        <div class="sidebarNav grid absolute right-0 h-full top-0">
-          <div class="sidebarItem">
-            <i class="fa-solid fa-apple-whole"></i>
-            <p>Mahlzeiten</p>
-          </div>
-          <div class="sidebarItem active">
-            <i class="fa-solid fa-clock"></i>
-            <p>Zeitraum</p>
-          </div>
-          <div class="sidebarItem">
-            <i class="fa-solid fa-syringe"></i>
-            <p>Therapie</p>
-          </div>
-          <div class="sidebarItem">
-            <i class="fa-solid fa-user"></i>
-            <p>Patient:in</p>
-          </div>
-        </div>
+        <SimulateTab></SimulateTab>
       </BottomBarContent>
     </div>
     <div class="tab-container block inset-x-0 z-10 bottom-0 fixed bg-white"> <!-- Bottom Nav Bar -->
@@ -73,13 +56,14 @@
 
 <script>
 import BottomBarContent from "./BottomBarContent.vue";
+import SimulateTab from "./SimulateTab.vue";
 
 export default {
-  components: {BottomBarContent},
+  components: {BottomBarContent, SimulateTab},
   data(){
     return{
       isDialogOpen: true,
-      currentDialog: "tabScenario"
+      currentDialog: "tabSimulate"
     }
   },
   methods: {
@@ -141,25 +125,6 @@ i{
   @apply text-2xl;
 }
 
-.sidebarItem{
-  background-color: var(--blue-medium);
-  color: var(--blue-grey);
-  border-bottom: 1px solid;
-  border-color: var(--blue-grey);
-  @apply w-24 text-center my-auto h-full;
-}
-
-.sidebarItem + .active{
-  background-color: var(--blue-grey);
-  color: var(--blue-medium);
-}
-
-
-.sidebarNav{
-  border-radius: 0 22px 0 0;
-  @apply overflow-hidden;
-}
-
 .closer{
   @apply w-1/12 bg-blue-100 h-1 rounded-full absolute left-1/2 cursor-pointer;
 }
@@ -178,7 +143,7 @@ i{
   @apply px-6 py-4 text-center;
 }
 
-.tab-btn + .active{
+.tab-btn.active{
   color: var(--blue-light);
   border-right: none;
   background-color: var(--blue-primary);
