@@ -20,6 +20,7 @@ export default {
 	data() {
 		return {
 			currentDatasetID: 1,
+			controllerOutput: [],
 		}
 	},
 	methods: {
@@ -42,6 +43,30 @@ export default {
 			pointStyle: "triangle", 
 			rotation: 180,
 		    data: [],},
+			{
+			type: "scatter", 
+			yAxisID: 'y', 
+			label: this.$t("iob"), 
+			borderColor: colors['THUGreen'], 
+			backgroundColor: colors['THUGreen'], 
+			radius: 2, 
+			pointStyle: "circle",
+			data: [],},
+		  {
+			type: "scatter", 
+			yAxisID: 'yG', 
+			label: this.$t("totalmeal"), 
+			borderColor: colors['THUAnthrazit'], 
+			backgroundColor: colors['THUDarkBlue'], 
+			radius: 10, pointStyle: "triangle",
+			data: [],},
+		  {	
+			type: "line", 
+			yAxisID: 'yG', 
+			label: this.$t("carbspermin"), 
+			borderColor: colors['THUDarkBlue'], 
+			stepped: "before",
+			data: [],},
 	  	);
        
 	    let simResults = JSON.parse(JSON.stringify(this.$store.getters.results))
@@ -49,12 +74,15 @@ export default {
 	    for (const result of simResults) {
           const {t, x, u, y, logData} = result
 		  chartInsulinCarbs.data.datasets[0].data.push({x: t, y: u.iir});
-		  chartInsulinCarbs.data.datasets[1].data
-              .push({x:t});
 		  if (u.ibolus > 0) {
 		  chartInsulinCarbs.data.datasets[1].data
-              .push({x:t.valueOf(), y:u.ibolus});
+              .push({x:t, y:u.ibolus});
 		  }
+		  if (typeof log !== "undefined") {
+			chartInsulinCarbs.data.datasets[2].data.push({x:t, y: logData.IOB});
+		  }
+		  chartInsulinCarbs.data.datasets[3].data.push({x:t, y: u.meal});
+		  chartInsulinCarbs.data.datasets[4].data.push({x:t, y: u.carbs});
 		}
         chartInsulinCarbs.update();
       }
@@ -78,7 +106,7 @@ export default {
 
 	chartInsulinCarbs = new Chart(ctx, {
       data: {
-	    datasets: [
+	    /* datasets: [
 		  {
 			type: "line", 
 		    yAxisID: 'y', 
@@ -116,11 +144,11 @@ export default {
 			label: this.$t("carbspermin"), 
 			borderColor: colors['THUDarkBlue'], 
 			stepped: "before"},
-		],
+		], */
 	  },
 	  options: {
 		layout: {
-	        padding: {right: 20},
+	        padding: {right: 10},
 	    },
 	    scales: {
 		  x: {
