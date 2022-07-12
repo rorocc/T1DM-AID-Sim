@@ -1,5 +1,5 @@
 <template>
-	<div style="position: relative; height:40vh;">
+	<div style="position: relative; height:40vh;" class="mb-16">
 		<canvas id="canvas_curves_insulin"></canvas>
 	</div>
 
@@ -175,6 +175,10 @@ export default {
 		plugins: {
 		  legend: {
 			position: 'bottom',
+			labels:{
+				usePointStyle: true,
+				pointStyle: 'circle',
+			}
 		  },
 		  tooltip: {
 		    callbacks: {
