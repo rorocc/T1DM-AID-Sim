@@ -1,23 +1,24 @@
 <template>
   <div class="sidebarNav grid absolute right-0 h-full top-0">
-    <div class="sidebarItem active">
+    <div @click="toggleSidebar('sideMeals')" ref="sideMeals" class="tab-btn active">
       <i class="fa-solid fa-apple-whole"></i>
       <p>Mahlzeiten</p>
     </div>
-    <div class="sidebarItem">
+    <div @click="toggleSidebar('sideTime')" ref="sideTime" class="tab-btn">
       <i class="fa-solid fa-clock"></i>
       <p>Zeitraum</p>
     </div>
-    <div class="sidebarItem">
+    <div @click="toggleSidebar('sideTherapy')" ref="sideTherapy" class="tab-btn">
       <i class="fa-solid fa-syringe"></i>
       <p>Therapie</p>
     </div>
-    <div class="sidebarItem">
+    <div @click="toggleSidebar('sidePatient')" ref="sidePatient" class="tab-btn">
       <i class="fa-solid fa-user"></i>
       <p>Patient:in</p>
     </div>
   </div>
 
+<div v-show="this.activeTab === 'sideMeals'">
   <div>
     <input type="text" placeholder="Alter">
     <input type="text" placeholder="Gewicht">
@@ -35,6 +36,20 @@
     </div>
 
   </div>
+
+</div>
+<div v-if="this.activeTab === 'sideTime'">
+  <p> test </p>
+</div>
+
+<div v-if="this.activeTab === 'sideTherapy'">
+  <p> test </p>
+</div>
+
+<div v-if="this.activeTab === 'sidePatient'">
+  <p> test </p>
+</div>
+
 </template>
 
 <script>
@@ -45,6 +60,7 @@ export default {
       date: new Date().toISOString().split('T')[0],
       time: new Date().toLocaleTimeString(),
       hours: 8,
+      activeTab: 'sideMeals'
     }
   },
   watch: {
@@ -58,6 +74,16 @@ export default {
       let fDate = new Date(this.date + ' ' + val)
       this.$store.dispatch("setTime", [fDate, this.hours]);
     }
+  },
+  methods:{
+    toggleSidebar(tabRef){
+      this.activeTab = tabRef;
+      this.$refs['sideMeals'].classList.remove('active');
+      this.$refs['sideTime'].classList.remove('active');
+      this.$refs['sideTherapy'].classList.remove('active');
+      this.$refs['sidePatient'].classList.remove('active');
+      this.$refs[tabRef].classList.add('active');
+    }
   }
 }
 </script>
@@ -70,7 +96,7 @@ input{
   @apply rounded p-2;
 }
 
-.sidebarItem{
+.tab-btn{
   background-color: var(--blue-medium);
   color: var(--blue-grey);
   border-bottom: 1px solid;
@@ -78,7 +104,7 @@ input{
   @apply w-24 text-center my-auto h-full;
 }
 
-.sidebarItem.active{
+.active{
   background-color: var(--blue-grey);
   color: var(--blue-medium);
 }
