@@ -97,7 +97,7 @@
     </div>
   </ContentContainer>
 
-  <div>
+  <div class="mb-16">
     <div style="background-color: var(--blue-primary);" class="w-full text-center text-white py-2">
       <div class="grid grid-cols-3">
         <i @click="previousCircle()" class="fa-solid fa-angle-left my-auto"></i>

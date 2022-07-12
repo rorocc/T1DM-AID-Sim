@@ -75,7 +75,7 @@
     </div>
   </ContentContainer>
 
-  <ContentContainer>
+  <ContentContainer class="mb-16">
     <h1>Zeitraum</h1>
     <div class="grid grid-cols-2 items-center">
       <div>
@@ -83,9 +83,13 @@
         <p>{{this.$store.getters.timeRange.tmax.toLocaleString()}}</p>
         <p>{{(this.$store.getters.timeRange.tmax - this.$store.getters.timeRange.t0)/ (1000 * 3600)}} Stunden betrachtet</p>
       </div>
-      <div>
-        <p> {{ this.$store.getters.meals}} </p> <!-- needed: number of meals -->
-        <p>Mahlzeiten</p>
+      <div class="justify-center flex">
+        <div>
+          <div class="meals-circle mx-auto">
+            <p class="content"> {{this.$store.getters.input.meals.length}} </p>
+          </div>
+          <p>Mahlzeiten</p>
+        </div>
       </div>
     </div>
   </ContentContainer>
@@ -170,5 +174,14 @@ export default {
 .stats-content{
   @apply text-2xl font-semibold;
 }
+
+.meals-circle {
+    background-color: var(--blue-medium);
+    @apply rounded-full h-12 w-12 text-center flex;
+  }
+
+  .meals-circle .content {
+    @apply my-auto mx-auto;
+  }
 
 </style>
