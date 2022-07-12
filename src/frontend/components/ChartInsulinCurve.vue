@@ -43,7 +43,7 @@ export default {
 			pointStyle: "triangle", 
 			rotation: 180,
 		    data: [],},
-			{
+			/*{
 			type: "scatter", 
 			yAxisID: 'y', 
 			label: this.$t("iob"), 
@@ -51,7 +51,7 @@ export default {
 			backgroundColor: colors['THUGreen'], 
 			radius: 2, 
 			pointStyle: "circle",
-			data: [],},
+			data: [],},*/
 		  {
 			type: "scatter", 
 			yAxisID: 'yG', 
@@ -60,13 +60,13 @@ export default {
 			backgroundColor: colors['THUDarkBlue'], 
 			radius: 10, pointStyle: "triangle",
 			data: [],},
-		  {	
+		  /*{	
 			type: "line", 
 			yAxisID: 'yG', 
 			label: this.$t("carbspermin"), 
 			borderColor: colors['THUDarkBlue'], 
 			stepped: "before",
-			data: [],},
+			data: [],}, */
 	  	);
        
 	    let simResults = JSON.parse(JSON.stringify(this.$store.getters.results))
@@ -78,11 +78,11 @@ export default {
 		  chartInsulinCarbs.data.datasets[1].data
               .push({x:t, y:u.ibolus});
 		  }
-		  if (typeof log !== "undefined") {
+		  /* if (typeof log !== "undefined") {
 			chartInsulinCarbs.data.datasets[2].data.push({x:t, y: logData.IOB});
-		  }
-		  chartInsulinCarbs.data.datasets[3].data.push({x:t, y: u.meal});
-		  chartInsulinCarbs.data.datasets[4].data.push({x:t, y: u.carbs});
+		  }*/
+		  chartInsulinCarbs.data.datasets[2].data.push({x:t, y: u.meal});
+		  // chartInsulinCarbs.data.datasets[4].data.push({x:t, y: u.carbs});
 		}
         chartInsulinCarbs.update();
       }
@@ -147,9 +147,6 @@ export default {
 		], */
 	  },
 	  options: {
-		layout: {
-	        padding: {right: 10},
-	    },
 	    scales: {
 		  x: {
 		    type: "time",
@@ -160,7 +157,7 @@ export default {
 			title: {display: true, text: "U, U/h"},
 			min: 0, 
 			ticks: {stepSize: 1},
-			suggestedMax: 3, 
+			suggestedMax: 10, 
 		  },
 		  yG: {
 			title: {display: true, text: "g, g/min"}, 
@@ -168,10 +165,13 @@ export default {
 			min: 0,
 			suggestedMax: 30,
 			ticks: {stepSize: 10},
-			grid: { drawOnChartArea: false},
+			grid: { drawOnChartArea: true},
 		  },
 		},
 		plugins: {
+		  legend: {
+			position: 'bottom',
+		  },
 		  tooltip: {
 		    callbacks: {
 			  afterBody: (context) => {
