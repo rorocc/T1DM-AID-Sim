@@ -1,7 +1,7 @@
 <template>
-  <div class="container mx-auto p-4 h-full">
+  <body class="container mx-auto p-4 h-full">
     <Tabs></Tabs>
-  </div>
+  </body>
   <footer>
    <BottomBar></BottomBar>
   </footer>

@@ -1,5 +1,5 @@
 <template>
-  <div class="bottom fixed bottom-0 w-full h-1/2">
+  <div class="bottom fixed bottom-0 w-full h-1/2 mb-14">
     <div v-if="this.isDialogOpen" class="bottom-dialog h-full"> <!-- Bottom Dialog Screens -->
       <BottomBarContent v-if="this.currentDialog === 'tabScenario'">
         <div @click="toggleDialog(0)" class="closer"></div>
