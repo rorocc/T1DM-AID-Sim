@@ -3,6 +3,7 @@ import * as util from "../common/util.js";
 
 export default createStore({
     state: {
+        runSimFlag: false,
         input: {
             patient: {
 
@@ -83,11 +84,28 @@ export default createStore({
             let tMax = new Date(date.setTime(date.getTime() + val[1] * 60 * 60 * 1000));
 
             state.input.timeRange.tmax = new Date(tMax.valueOf())
+
+            state.runSimFlag = true; // SETTING FLAG
+
+        },
+        SET_FLAG(state,bool){
+            state.runSimFlag = bool;
+        },
+        SET_MEALS(state, meals){
+            console.log("SET_MEALS", meals)
+            state.input.meals = meals;
+            state.runSimFlag = true; // SETTING FLAG
         }
     },
     actions: {
+        setMeals({commit},meals){
+          commit("SET_MEALS",meals);
+        },
         setTime({commit}, val){
             commit("SET_TIME", val)
+        },
+        setSimFlag({commit}, bool){
+          commit("SET_FLAG", bool);
         },
         setResults({commit}, newValue){
             commit("SET_RESULTS", newValue);
@@ -105,6 +123,9 @@ export default createStore({
         }
     },
     getters: {
+        simFlag(state){
+          return state.runSimFlag;
+        },
         input(state){
             return state.input
         },
