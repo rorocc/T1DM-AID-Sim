@@ -38,19 +38,39 @@
 
 
   <div>
-    <div v-if="this.activeTab==='tabTime'">
-      <input v-model.lazy="date" type="date" placeholder="Beginn">
-      <input v-model.lazy="time" type="time" placeholder="Zeitpunkt">
-      <input v-model.lazy="hours" type="number" placeholder="Zeitraum in h">
+    <div v-if="this.activeTab==='tabTime'" class="grid grid-flow-row justify-between space-y-2 w-full">
+      <div class="grid grid-flow-col justify-between">
+        <label for="date">Beginn</label>
+        <input id="date" v-model.lazy="date" type="date" placeholder="Beginn">
+      </div>
+      <div class="grid grid-flow-col justify-between">
+        <label for="time">Zeitpunkt</label>
+        <input id="time" v-model.lazy="time" type="time" placeholder="Zeitpunkt">
+      </div>
+      <div class="grid grid-flow-col justify-between">
+        <label for="hours">Zeitraum in h</label>
+        <input id="hours" v-model.lazy="hours" type="number" placeholder="Zeitraum in h">
+      </div>
     </div>
 
-    <div v-if="this.activeTab==='tabMeals'" v-for="meal in this.meals" class="w-full bg-gray-200 p-4">
-      <div>
-        <p>{{ meal.actual.start.toLocaleString() }}</p>
-        <p> Ankündigung: <span v-if="meal.announcement">{{meal.announcement.start.toLocaleString()}}</span><span v-else>Nein</span></p>
+    <div v-if="this.activeTab==='tabMeals'">
+      <div v-for="meal in this.meals" class="singleMeal">
+        <div>
+          <p>{{ meal.actual.start.toLocaleString() }}</p>
+          <p> Ankündigung: <span v-if="meal.announcement">{{meal.announcement.start.toLocaleString()}}</span><span v-else>Nein</span></p>
+        </div>
+        <input id="carbs" v-model="meal.actual.carbs" type="number" placeholder="Kohlenhydrate in g">
+        <label for="carbs">Kohlenhydrate in g</label>
+        <input id="abstand" type="number" placeholder="Ankündigungsabstand">
+        <label for="abstand">Ankündigungsabstand</label>
       </div>
-      <input v-model="meal.actual.carbs" type="number" placeholder="Kohlenhydrate in g">
-      <input type="number" placeholder="Ankündigungsabstand">
+
+      <div class="addMealContainer" @click="addMeal()">
+        <div class="addMealButton">
+          <i class="fa-solid fa-plus"></i>
+        </div>
+        <p>Mahlzeit hinzufügen</p>
+      </div>
     </div>
 
   </div>
@@ -58,6 +78,8 @@
 </template>
 
 <script>
+import {dateToBrowserLocale} from "../../common/util.js";
+
 export default {
   name: "SimulateTab",
   data() {
@@ -70,31 +92,51 @@ export default {
     }
   },
   watch: {
+    hours(val, oldVal){
+      let fDate = new Date(this.date + ' ' + this.time);
+      this.$store.dispatch("setTime", [fDate, val]);
+    },
     date(val, oldVal){
       let fDate = new Date(val + ' ' + this.time)
-      console.log("FDATE", fDate)
       this.$store.dispatch("setTime", [fDate, this.hours]);
-      console.log(fDate)
     },
     time(val, oldVal){
       let fDate = new Date(this.date + ' ' + val)
       this.$store.dispatch("setTime", [fDate, this.hours]);
-    }
+    },
   },
   methods: {
-    pushMeal(){
+    addMeal(){
+      let start, duration, carbs, announcement;
+
+      if(!this.meals){
+        duration = 15;
+        carbs = 20;
+        start = new Date(this.date + ' ' + this.time);
+      }else{
+        duration = this.meals[this.meals.length-1].actual.duration;
+        carbs = this.meals[this.meals.length-1].actual.carbs;
+        start = this.meals[this.meals.length-1].actual.start;
+      }
+
+      announcement = undefined;
+
+      this.pushMeal(start, duration, carbs, announcement);
+
+
+    },
+    pushMeal(start, duration, carbs, announcement){
       let meal = {
         actual: {
-          start: new Date(2022,5,1,8,0,0),
-          duration: 15,
-          carbs: 20,
+          start: start,
+          duration: duration,
+          carbs: carbs,
         },
-        announcement: {
-          start: new Date(2022,5,1,8,0,0),
-          carbs: 20,
-          time: new Date(2022,5,1,7,0,0),
-        },
+        announcement
       }
+
+      this.meals.push(meal);
+      this.$store.dispatch("setMeals", this.meals)
     },
     setActiveTab(ref){
       this.activeTab = ref;
@@ -111,6 +153,20 @@ export default {
 </script>
 
 <style scoped>
+
+.singleMeal{
+  @apply w-full bg-gray-200 p-4 my-2 rounded;
+}
+
+.addMealContainer{
+  @apply w-full grid grid-flow-col space-x-2 items-center justify-center mt-3;
+}
+
+.addMealButton{
+  border: 1px solid;
+  border-color: var(--blue-primary);
+  @apply rounded-full w-8 h-8 grid justify-center items-center;
+}
 
 .itemLabel{
   @apply my-auto;

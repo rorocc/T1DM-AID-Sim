@@ -27,12 +27,13 @@ export default {
     }
   },
   watch: {
-    '$store.getters.input.timeRange': {
-      deep: true,
-      immediate: false,
+    '$store.getters.simFlag': {
       handler: function(newV) {
-        console.log("APP-VUE INPUT CHANGE DETECTED")
-        this.runSimulation();
+        console.log("APP-VUE FLAG")
+        this.$store.dispatch("setSimFlag",false);
+        if(newV){
+          this.runSimulation();
+        }
       },
     },
   },
