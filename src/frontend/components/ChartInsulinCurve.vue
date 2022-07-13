@@ -176,6 +176,7 @@ export default {
 		plugins: {
 		  legend: {
 			position: 'bottom',
+			align: 'start',
 			labels:{
 				usePointStyle: true,
 			}
