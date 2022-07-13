@@ -31,21 +31,21 @@ export default {
         chartInsulinCarbs.data.datasets = [];
         
 		chartInsulinCarbs.data.datasets.push({
-          	type: "line", 
-		    yAxisID: 'y', 
-			label: this.$t("iir"), 
-			borderColor: colors['THURed'], 
-			spanGaps: true, 
-			stepped: "before",
-			data: [],},
-			{
-			type: "scatter", 
+          	type: "scatter", 
 			label: this.$t("ibolus"), 
-			backgroundColor: colors['THURed'], 
+			backgroundColor: colors['THUTeal'], 
 			radius: 10, 
 			pointStyle: "circle", 
 			rotation: 180,
 		    data: [],},
+			{
+			type: "line", 
+		    yAxisID: 'y', 
+			label: this.$t("iir"), 
+			borderColor: colors['THULightBlue'], 
+			spanGaps: true, 
+			stepped: "before",
+			data: [],},
 			/*{
 			type: "scatter", 
 			yAxisID: 'y', 
@@ -59,8 +59,7 @@ export default {
 			type: "scatter", 
 			yAxisID: 'yG', 
 			label: this.$t("totalmeal"), 
-			borderColor: colors['THUAnthrazit'], 
-			backgroundColor: colors['THUDarkBlue'], 
+			backgroundColor: colors['THULightGray'], 
 			radius: 10, pointStyle: "circle",
 			data: [],},
 		  /*{	
@@ -76,11 +75,13 @@ export default {
      
 	    for (const result of simResults) {
           const {t, x, u, y, logData} = result
-		  chartInsulinCarbs.data.datasets[0].data.push({x: t, y: u.iir});
+
 		  if (u.ibolus > 0) {
-		  chartInsulinCarbs.data.datasets[1].data
+		  chartInsulinCarbs.data.datasets[0].data
               .push({x:t, y:u.ibolus});
 		  }
+			chartInsulinCarbs.data.datasets[1].data.push({x: t, y: u.iir});
+
 		  /* if (typeof log !== "undefined") {
 			chartInsulinCarbs.data.datasets[2].data.push({x:t, y: logData.IOB});
 		  }*/
@@ -200,20 +201,20 @@ export default {
 <i18n locale="en">
 {
 	"title":		"Insulin dosage and carb intake",
-	"iir":			"insulin infusion rate in U/h",
-	"ibolus":		"insulin bolus in U",
+	"iir":			"Basalrate (U/h)",
+	"ibolus":		"Bolus (U)",
 	"iob":			"calculated IOB in U",
-	"totalmeal":	"total meal in g",
+	"totalmeal":	"Mahlzeiten (Kh)",
 	"carbspermin":	"intake in g/min",
 }
 </i18n>
 <i18n locale="de">
 {
 	"title": 		"Insulindosierung und Mahlzeiten",
-	"iir":			"Insulinrate in U/h",
-	"ibolus":		"Insulinbolus in U",
+	"iir":			"Basalrate (U/h)",
+	"ibolus":		"Bolus (U)",
 	"iob":			"Berechnetes IOB in U",
-	"totalmeal":	"Gesamte Mahlzeit in g",
+	"totalmeal":	"Mahlzeiten (Kh)",
 	"carbspermin":	"Aufnahme in g/min",
 }
 </i18n>
