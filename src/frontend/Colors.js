@@ -6,4 +6,6 @@ export default {
 	'THUGreen':		'#52AF76',
 	'THULightGray':	'#C0C5C7',
 	'THUAnthrazit':	'#586067',
+	'THUTeal':		'#008080',
+	'THULightBlue': '#0C8DE3',
 };
