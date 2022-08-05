@@ -9,7 +9,7 @@
 
 <script>
 import Simulator from '../core/Simulator.js'
-import ControllerBasalBolus from '../core/controllers/BasalBolus.js'
+import ControllerOref0 from '../core/controllers/Oref0.js'
 import VirtualPatientUvaPadova from '../core/models/UvaPadova.js'
 import BottomBar from './components/BottomBar.vue';
 import ContentContainer from "./components/ContentContainer.vue";
@@ -24,6 +24,17 @@ export default {
   data(){
     return{
       results: {},
+      profile: {
+				max_iob: 3.5,
+				dia: 6,
+				max_daily_basal: 1.3,
+				max_basal: 3.5,
+				max_bg: 120,
+				min_bg: 95,
+				sens: 50,
+				carb_ratio: 9,
+				maxCOB: 120,
+			},
     }
   },
   watch: {
@@ -51,8 +62,8 @@ export default {
       // define a patient object
       let patient = new VirtualPatientUvaPadova()
       // define a controller/algorithm
-      let controller = new ControllerBasalBolus()
-      controller.setParameters(patient.IIReq, true, 30, 1.5)
+      let controller = new ControllerOref0()
+      controller.setParameters(JSON.parse(JSON.stringify(this.profile)), true, 30, 1.5)
 
       sim.setPatient(patient)
       sim.setController(controller)

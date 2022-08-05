@@ -24,9 +24,9 @@ export default createStore({
               {
                   edit: false,
                   actual: {
-                      start: new Date(2022,5,1,8,0,0),
+                      start: new Date(2022,5,1,9,0,0),
                       duration: 15,
-                      carbs: 20,
+                      carbs: 10,
                   }
               }],
             timeRange: {
@@ -35,7 +35,7 @@ export default createStore({
                 "tmax": new Date(2022,5,1,18,0,0),
             },
         },
-        results: [{ "t": "2022-06-01T04:00:00.000Z", "x": { "Gp": 180, "Gt": 136.18855213996963, "Ip": 2.1160867725422206, "Il": 2.156181048232494, "Qsto1": 0, "Qsto2": 0, "Qgut": 0, "XL": 42.32173545084441, "I_": 42.32173545084441, "X": 0, "Isc1": 56.320463330739095, "Isc2": 50.75030761670995 }, "u": { "iir": 0.7687743244645887, "ibolus": 0, "carbs": 0, "meal": null }, "y": { "Gp": 95.74468085106383, "G": 95.74468085106383 } }],
+        results: [],
         computedStats: {}
     },
     mutations: {
