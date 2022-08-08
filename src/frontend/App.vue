@@ -62,9 +62,9 @@ export default {
       // define a patient object
       let patient = new VirtualPatientUvaPadova()
       // define a controller/algorithm
-      let controller = new ControllerOref0()
-      controller.setParameters(JSON.parse(JSON.stringify(this.profile)), true, 30, 1.5)
-
+      let controller = this.$store.getters.simulationController;
+      // controller.setParameters(JSON.parse(JSON.stringify(this.profile)), true, 30, 1.5)
+      console.log("SIMULATION CONTROLLER", controller)
       sim.setPatient(patient)
       sim.setController(controller)
       sim.setMeals(this.$store.getters.input.meals)

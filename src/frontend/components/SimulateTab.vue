@@ -112,14 +112,19 @@
         </div>
       </div>
 
+      <ControllerConfig
+        v-if="this.activeTab==='tabTherapy'"></ControllerConfig>
+
     </div>
   </div>
 </template>
 
 <script>
 import {dateToBrowserLocale} from "../../common/util.js";
+import ControllerConfig from "./ControllerConfig.vue";
 
 export default {
+  components: {ControllerConfig},
   name: "SimulateTab",
   data() {
     return{
@@ -147,6 +152,12 @@ export default {
     },
   },
   methods: {
+    controllerChanged(newController) {
+      console.log(newController);
+			if (typeof newController !== "undefined") {
+				controller = newController
+			}
+		},
     spliceDate(date){
       let dateTemp = date;
       return dateTemp.toISOString().split('Z')[0]

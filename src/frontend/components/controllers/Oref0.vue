@@ -64,7 +64,7 @@ export default {
 
 <template>
 	<div id="controlleroptions" class="parameterlist">
-		<ul>
+		<!-- <ul>
 			<li class="item" v-tooltip="$t('tooltips.useBolus')">
 				<label for="useBolus">
 					<div class="item-description">{{$t("useBolus")}}</div>
@@ -177,7 +177,7 @@ export default {
 					<div class="item-unit">U/h</div>
 				</label>
 			</li>
-		</ul>
+		</ul>-->
 	</div>
 </template>
 
