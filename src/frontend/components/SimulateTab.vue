@@ -79,7 +79,7 @@
           <div v-else>
             <div class="mb-2">
               <label  for="carbs">Beginn</label>
-              <input class="col-span-2" id="carbs" @change="meal.actual.start = $event.target.valueAsDate" :value="meal.actual.start && meal.actual.start.toISOString().split('Z')[0]" type="datetime-local" placeholder="Kohlenhydrate in g">
+              <input class="col-span-2" id="carbs" @change="changeStart(index, $event)" :value="convertValueForDatePicker(meal)" type="datetime-local" placeholder="Kohlenhydrate in g">
             </div>
             <div class="grid grid-cols-3 items-center">
               <label class="col-span-2" for="carbs">Kohlenhydrate in g</label>
@@ -117,7 +117,6 @@
 </template>
 
 <script>
-import {dateToBrowserLocale} from "../../common/util.js";
 
 export default {
   name: "SimulateTab",
@@ -147,15 +146,16 @@ export default {
     },
   },
   methods: {
-    spliceDate(date){
-      let dateTemp = date;
-      return dateTemp.toISOString().split('Z')[0]
+    convertValueForDatePicker(meal) {
+      const start = meal.actual.start;
+      const dateInUTC = new Date(start.valueOf() - start.getTimezoneOffset() * 60000);
+      const date = dateInUTC.toISOString().split('Z')[0];
+      return date;
     },
-    getDateFormat(date){
-      let dateF = date.toISOString().split('T')[0];
-      let timeF = date.toLocaleTimeString();
-      let temp = new Date(dateF + ' ' + timeF);
-      return new Date(temp.valueOf());
+    changeStart(i, event) {
+      const value = event.target.value;
+      const date = new Date(value);
+      this.meals[i].actual.start = date;
     },
     addMeal(){
       let start, duration, carbs, announcement;
