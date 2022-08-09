@@ -5,6 +5,7 @@
 <script>
 import Chart from 'chart.js/auto';
 import { defaults } from 'chart.js'
+import colors from '../Colors.js';
 import 'chartjs-adapter-moment';
 
 let chartGlucose;
@@ -43,14 +44,39 @@ export default {
         segment: {
           borderColor: ctx => glucoseColor(ctx),
         },
-      });
+      },
+      {type: "scatter", 
+        yAxisID: 'yG', 
+        label: this.$t("totalmeal"), 
+        backgroundColor: colors['THULightGray'], 
+        radius: 10, pointStyle: "circle",
+        data: [],
+      },
+      // Anmerkung: Die Farbe geht aus irgendwelchen Gründen verloren
+      {type: "scatter", 
+        yAxisID: 'yB', 
+        label: this.$t("ibolus"), 
+        backgroundColor: colors['THUTeal'], 
+        radius: 10, 
+        pointStyle: "circle", 
+        rotation: 180,
+          data: [],
+      },
+      );
 
       let simResults = JSON.parse(JSON.stringify(this.$store.getters.results))
 
       for (const result of simResults) {
         const {t, x, u, y, logData} = result
         chartGlucose.data.datasets[0].data
-            .push({x:t.valueOf(), y:y.G});
+          .push({x:t.valueOf(), y:y.G});
+      		  
+        if (u.ibolus > 0) {
+        chartGlucose.data.datasets[1].data
+          .push({x:t, y:u.ibolus});
+        }
+        
+        chartGlucose.data.datasets[1].data.push({x:t, y: u.meal});
       }
 
 
@@ -104,6 +130,21 @@ export default {
             ticks: {stepSize: 20},
             min: 40,
             suggestedMax: 200,
+          },
+          yG: {
+            title: {display: true, text: "g, g/min"}, 
+            position: 'right',
+            min: 0,
+            suggestedMax: 30,
+            ticks: {stepSize: 10},
+            grid: { drawOnChartArea: true},
+            },
+          // Anmerkung: yB sorgt für die zweite Legende links. Bin nicht sicher, ob die angezeigt werden soll, aber irgendwo müsste sie dann ja hin
+          yB: {
+            title: {display: true, text: "U, U/h"},
+            min: 0, 
+            ticks: {stepSize: 1},
+            suggestedMax: 10, 
           },
         },
         plugins: {
