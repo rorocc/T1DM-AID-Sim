@@ -28,12 +28,14 @@ export default {
 			boxactive: false,	// open accordion box
 			controllerInfo: {},
 			controllerList: controllerList,
-			selectedController: "Oref0",
+			selectedController: 'Oref0',
 		}
 	},
 
 	updated() {
-		this.selectionChanged()
+		// this.selectionChanged()
+		this.selectedController = this.$store.getters.simulationControllerName;
+		console.log(this.$store.getters.simulationControllerName)
 	},
 
 	methods: {
@@ -46,7 +48,11 @@ export default {
 		},
 
 		controllerChanged(newController) {
-			this.$emit("controllerChanged", newController)
+			// this.$emit("controllerChanged", newController)
+			this.$store.dispatch("setSimulationController", {controller: newController, controllerName: this.selectedController});
+			console.log('controllerChanged', newController)
+			console.log('Controller List', controllerList)
+			console.log('Selected Controller', this.selectedController)
 		},
 
 		// during rendering of controller components, store information
@@ -87,7 +93,7 @@ export default {
 			<component v-for="controller in controllerList"
 				:key="controller"
 				:patient="patient" 
-				@controllerChanged="controllerChanged"
+				
 				:ref="setControllerRef"
 				:is="controller"
 				v-show="selectedController === controller"/>

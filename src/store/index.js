@@ -1,5 +1,8 @@
 import { createStore } from 'vuex'
 import * as util from "../common/util.js";
+import ControllerOref0 from '../core/controllers/Oref0.js';
+import ControllerBasalBolus from '../core/controllers/BasalBolus.js';
+import ControllerPID from '../core/controllers/PID.js';
 
 export default createStore({
     state: {
@@ -40,6 +43,24 @@ export default createStore({
         defaultTime: {
             date: new Date('2022-06-01T06:00:00').toISOString().split('T')[0],
             time: new Date('2022-06-01T06:00:00').toLocaleTimeString(),
+        },
+        simulationController: {
+            controllerName: "Oref0",
+            controller: new ControllerOref0(),
+            profile: {
+				max_iob: 3.5,
+				dia: 6,
+				max_daily_basal: 1.3,
+				max_basal: 3.5,
+				max_bg: 120,
+				min_bg: 95,
+				sens: 50,
+				carb_ratio: 9,
+				maxCOB: 120,
+            },
+            useBolus: true,
+            preBolusTime: 30,
+            carbFactor: 1.5,
         }
     },
     mutations: {
@@ -112,6 +133,22 @@ export default createStore({
         SET_TIMERANGE(state, tr){
             state.input.timeRange = tr;
             state.runSimFlag = true; // SETTING FLAG
+        },
+        SET_SIMULATION_CONTROLLER(state, newController) {
+            console.log("SET_SIMULATION_CONTROLLER", newController);
+            const controller = newController.controller;
+            const controllerName = newController.controllerName;
+            state.simulationController.controllerName = controllerName;
+            if(controllerName === "Oref0") {
+                state.simulationController.controller = new ControllerOref0();
+            } else if(controllerName === "BasalBolus") {
+                state.simulationController.controller = new ControllerBasalBolus();
+            } else if(controllerName === "PID") {
+                state.simulationController.controller = new ControllerPID();
+            }
+            state.runSimFlag = true; // SETTING FLAG
+            
+            console.log('Controller Name', controllerName)
         }
     },
     actions: {
@@ -141,7 +178,10 @@ export default createStore({
         },
         resetComputedStats({commit}){
             commit("RESET_COMPUTEDSTATS");
-        }
+        },
+        setSimulationController({commit}, newController){
+            commit("SET_SIMULATION_CONTROLLER", newController);
+        },
     },
     getters: {
         simFlag(state){
@@ -161,6 +201,48 @@ export default createStore({
         },
         defaultTime(state){
             return state.defaultTime;
+        },
+        simulationController(state){
+            const controllerName = state.simulationController.controllerName;
+            console.log('Hier springen wir rein')
+            
+            if(controllerName === "Oref0") {
+                const controller = state.simulationController.controller;
+                const profile = state.simulationController.profile;
+                const useBolus = state.simulationController.useBolus;
+                const preBolusTime = state.simulationController.preBolusTime;
+                const carbFactor = state.simulationController.carbFactor;
+                console.log(profile)
+                controller.setParameters(JSON.parse(JSON.stringify(profile)), useBolus, preBolusTime, carbFactor)
+                return controller;
+            } else if(controllerName === "BasalBolus") {
+                const controller = state.simulationController.controller;
+                const useBolus = true;
+                const PreBolusTime= 30;
+                const CarbFactor = 1.5;
+                const IIRb= 0.75;
+                controller.setParameters(IIRb, useBolus, PreBolusTime, CarbFactor);
+                return controller;
+            } else if(controllerName === "PID") {
+                const controller = state.simulationController.controller;
+                const useBolus= true;
+                const PreBolusTime= 30;
+                const CarbFactor= 1.5;
+                const IIRb= 0;
+                const kP= 0.01;
+                const kI= 0.001;
+                const kD= 0.05;
+                const target= 100;
+                controller.setParameters(IIRb, kP, kI, kD, target, useBolus, PreBolusTime, CarbFactor);
+                return controller;
+            }
+            console.log("Unsupported Controller. Current Controller: " + controllerName)
+            // throw "Unsupported Controller. Current Controller: " + controllerName;
+            return undefined;
+        },
+        simulationControllerName(state) {
+            console.log("Store", state.simulationController.controllerName)
+            return state.simulationController.controllerName;
         }
     }
 })

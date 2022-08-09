@@ -202,7 +202,7 @@ export default {
 <i18n locale="en">
 {
 	"title":		"Insulin dosage and carb intake",
-	"iir":			"Basalrate (U/h)",
+	"iir":			"Insulinrate (U/h)",
 	"ibolus":		"Bolus (U)",
 	"iob":			"calculated IOB in U",
 	"totalmeal":	"Mahlzeiten (Kh)",
@@ -212,7 +212,7 @@ export default {
 <i18n locale="de">
 {
 	"title": 		"Insulindosierung und Mahlzeiten",
-	"iir":			"Basalrate (U/h)",
+	"iir":			"Insulinrate (U/h)",
 	"ibolus":		"Bolus (U)",
 	"iob":			"Berechnetes IOB in U",
 	"totalmeal":	"Mahlzeiten (Kh)",

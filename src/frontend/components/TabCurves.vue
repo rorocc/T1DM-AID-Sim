@@ -1,8 +1,8 @@
 <template>
   <ContentContainer>
-    <h1>Kurven</h1>
+    <h1>Glukosekonzentration</h1>
     <ChartCurve></ChartCurve>
-    <h1>Basalrate + Bolus</h1>
+    <h1>Insulindosierung und Mahlzeiten</h1>
     <ChartInsulinCurve></ChartInsulinCurve>
   </ContentContainer>
 </template>

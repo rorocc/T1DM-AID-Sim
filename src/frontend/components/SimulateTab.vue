@@ -112,13 +112,19 @@
         </div>
       </div>
 
+      <ControllerConfig
+        v-if="this.activeTab==='tabTherapy'"></ControllerConfig>
+
     </div>
   </div>
 </template>
 
 <script>
+import {dateToBrowserLocale} from "../../common/util.js";
+import ControllerConfig from "./ControllerConfig.vue";
 
 export default {
+  components: {ControllerConfig},
   name: "SimulateTab",
   data() {
     return{
@@ -153,6 +159,12 @@ export default {
       const dateInUTC = new Date(start.valueOf() - start.getTimezoneOffset() * 60000);
       const date = dateInUTC.toISOString().split('Z')[0];
       return date;
+    },
+    controllerChanged(newController) {
+      console.log(newController);
+			if (typeof newController !== "undefined") {
+				controller = newController
+			}
     },
     changeStart(i, event) {
       const value = event.target.value;

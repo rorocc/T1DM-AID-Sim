@@ -66,7 +66,7 @@ export default {
 
 <template>
 	<div id="controlleroptions" class="parameterlist">
-		<ul>
+		<!-- <ul>
 			<li class="item">
 				<label for="IIRb">
 					<div class="item-description">{{$t("IIRb")}}</div>
@@ -111,7 +111,7 @@ export default {
 					<div class="item-unit">min</div>
 				</label>
 			</li>
-		</ul>
+		</ul> -->
 	</div>
 </template>
 
