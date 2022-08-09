@@ -123,8 +123,10 @@ export default {
   data() {
     return{
       activeTab: 'tabMeals',
-      date: new Date().toISOString().split('T')[0],
-      time: new Date().toLocaleTimeString(),
+      // date: new Date().toISOString().split('T')[0],
+      // time: new Date().toLocaleTimeString(),
+      date: this.$store.getters.defaultTime.date,
+      time: this.$store.getters.defaultTime.time,
       hours: 8,
       meals: this.$store.getters.input.meals,
       weight: 75,

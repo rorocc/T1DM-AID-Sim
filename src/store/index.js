@@ -36,7 +36,11 @@ export default createStore({
             },
         },
         results: [],
-        computedStats: {}
+        computedStats: {},
+        defaultTime: {
+            date: new Date('2022-06-01T06:00:00').toISOString().split('T')[0],
+            time: new Date('2022-06-01T06:00:00').toLocaleTimeString(),
+        }
     },
     mutations: {
         SET_RESULTS(state, results){
@@ -154,6 +158,9 @@ export default createStore({
         },
         computedStats(state){
             return state.computedStats;
+        },
+        defaultTime(state){
+            return state.defaultTime;
         }
     }
 })
