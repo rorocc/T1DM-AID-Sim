@@ -40,13 +40,15 @@
         <div class="closerContainer"  @click="toggleDialog(0)">
           <div class="closer"></div>
         </div>
-        <div class="w-full">
+        <div class="w-full" @click="saveCurrentSimulation()">
           <div class="mx-auto border-blue-900 border rounded-xl flex items-center w-2/3 text-blue-900 space-x-2 justify-center text-center">
             <i class="fa-solid fa-floppy-disk"></i> <p>Simulation speichern</p>
           </div>
         </div>
+        <div v-for="(entry, idx) in this.$store.getters.savedSims">
+          <SimulationEntry :input="entry.entry[2]" :results="entry.entry[0]" :computed-stats="entry.entry[1]"></SimulationEntry>
+        </div>
 
-        <SimulationEntry></SimulationEntry>
       </BottomBarContent>
       <BottomBarContent v-if="this.currentDialog === 'tabSimulate'">
         <div class="closerContainer"  @click="toggleDialog(0)">
@@ -81,6 +83,11 @@ export default {
     }
   },
   methods: {
+    saveCurrentSimulation(){
+      this.$store.dispatch("saveResults");
+      console.log(this.$store.getters.savedSims)
+
+    },
     setDialogType(type){
 
       if(this.currentDialog === type){

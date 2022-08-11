@@ -6,6 +6,7 @@ import ControllerPID from '../core/controllers/PID.js';
 
 export default createStore({
     state: {
+        savedSimulations: [],
         runSimFlag: false,
         input: {
             patient: {
@@ -64,6 +65,12 @@ export default createStore({
         }
     },
     mutations: {
+        SAVE_RESULTS(state){
+            let res = state.results;
+            let compRes = state.computedStats;
+            let inp = state.input;
+            state.savedSimulations.push({entry:[res, compRes, inp]})
+        },
         SET_RESULTS(state, results){
             state.results = results;
         },
@@ -152,6 +159,9 @@ export default createStore({
         }
     },
     actions: {
+        saveResults({commit}){
+            commit("SAVE_RESULTS")
+        },
         setTimeRange({commit}, tr){
           commit("SET_TIMERANGE",tr)
         },
@@ -184,6 +194,9 @@ export default createStore({
         },
     },
     getters: {
+        savedSims(state){
+            return state.savedSimulations;
+        },
         simFlag(state){
           return state.runSimFlag;
         },

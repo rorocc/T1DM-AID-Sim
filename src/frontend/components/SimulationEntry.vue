@@ -1,9 +1,9 @@
 <template>
   <div class="entry flex justify-between">
     <div class="grid grid-row-2">
-      <p class="font-bold"><i class="fa-solid fa-pen"></i> OpenAPS | 1 Mahlzeit | 10:00-16:00 Uhr</p>
+      <p class="font-bold"><i class="fa-solid fa-pen"></i> OpenAPS | {{input.meals.length}} Mahlzeiten | {{results[0].t.toTimeString().substring(0,5)}}-{{results[results.length-1].t.toTimeString().substring(0,5)}} Uhr</p>
       <div class="grid grid-flow-col items-center justify-content-between">
-        <p>SIMULIERT VOR 2 TAGEN</p>
+        <p>{{(computedStats.t_total/60).toFixed()}} Stunden</p>
         <div class="bar h-4 w-20 relative">
           <div class="bg-purple-600 h-full w-full absolute"></div>
           <div class="bg-green-600 h-full w-2/4 absolute"></div>
@@ -17,7 +17,8 @@
 
 <script>
 export default {
-  name: "SimulationEntry"
+  name: "SimulationEntry",
+  props: ['results', 'computedStats','input']
 }
 </script>
 
