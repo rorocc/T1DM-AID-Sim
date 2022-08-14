@@ -1,28 +1,40 @@
 <template>
-  <div class="entry flex justify-between">
-    <div class="grid grid-row-2">
-      <p class="font-bold"><i class="fa-solid fa-pen"></i> OpenAPS | {{input.meals.length}} Mahlzeiten | {{results[0].t.toTimeString().substring(0,5)}}-{{results[results.length-1].t.toTimeString().substring(0,5)}} Uhr</p>
-      <div class="grid grid-flow-col items-center justify-content-between">
+  <div class="entry flex justify-between w-full" @click="showSavedSim()">
+    <div class="grid grid-row-2 w-3/4">
+      <p class="font-bold">{{input.meals.length}} Mahlzeiten | {{new Date(results[0].t).toTimeString().substring(0,5)}}-{{new Date(results[results.length-1].t).toTimeString().substring(0,5)}} Uhr</p>
+      <div class="grid grid-cols-2 items-center justify-content-between w-full">
         <p>{{(computedStats.t_total/60).toFixed()}} Stunden</p>
-        <div class="bar h-4 w-20 relative">
-          <div class="bg-purple-600 h-full w-full absolute"></div>
-          <div class="bg-green-600 h-full w-2/4 absolute"></div>
-          <div class="bg-red-700 h-full w-1/4 absolute"></div>
+        <div class="bar h-4 w-full relative inline-flex">
+          <div class="bg-purple-600 h-full" :style="{width: calculateWidth(computedStats.tir_high + computedStats.tir_veryhigh) + '%'}"></div>
+          <div class="bg-green-600 h-full" :style="{width: calculateWidth(computedStats.tir_target) + '%'}"></div>
+          <div class="bg-red-700 h-full" :style="{width: calculateWidth(computedStats.tir_low) + '%'}"></div>
         </div>
       </div>
     </div>
-    <i class="fa-solid fa-eye toggle-visibility"></i>
+    <i class="fa-solid fa-chevron-right toggle-visibility"></i>
   </div>
 </template>
 
 <script>
 export default {
   name: "SimulationEntry",
-  props: ['results', 'computedStats','input']
+  props: ['results', 'computedStats','input','idx'],
+
+  methods: {
+    showSavedSim(){
+      this.$store.dispatch("setSavedResults",this.idx);
+    },
+    calculateWidth(tr){
+      let width = this.computedStats.t_total <= 0 ? 0 : Math.round((100 * tr) / this.computedStats.t_total);
+      console.log("timerange", width);
+      return width;
+    }
+  }
 }
 </script>
 
 <style scoped>
+
   .toggle-visibility{
     @apply mr-3 my-auto text-xl;
   }

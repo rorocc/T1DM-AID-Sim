@@ -65,11 +65,18 @@ export default createStore({
         }
     },
     mutations: {
+        SET_SAVED(state,idx){
+            state.input = state.savedSimulations[idx].inp;
+            state.results = state.savedSimulations[idx].res;
+            state.computedStats = state.savedSimulations[idx].compRes;
+        },
         SAVE_RESULTS(state){
             let res = state.results;
             let compRes = state.computedStats;
             let inp = state.input;
-            state.savedSimulations.push({entry:[res, compRes, inp]})
+            let entry = {res,compRes,inp};
+            let nonReactiveEntry = JSON.parse(JSON.stringify(entry))
+            state.savedSimulations.push(nonReactiveEntry)
         },
         SET_RESULTS(state, results){
             state.results = results;
@@ -159,6 +166,9 @@ export default createStore({
         }
     },
     actions: {
+        setSavedResults({commit},idx){
+          commit("SET_SAVED",idx)
+        },
         saveResults({commit}){
             commit("SAVE_RESULTS")
         },

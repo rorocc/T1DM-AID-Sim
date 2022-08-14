@@ -15,7 +15,7 @@
               <p>Doppelte Mahlzeit</p>
               <i class="fa-solid fa-bowl-food"></i>
             </div>
-            <div class="scenario-block">
+            <div class="scenario-block" @click="showAlert('Der Simulator unterstützt zur Zeit nicht die Berechnung der Auswirkungen von Alkoholkonsum.')">
               <p>Alkohol</p>
               <i class="fa-solid fa-wine-bottle"></i>
             </div>
@@ -30,9 +30,11 @@
               <i class="fa-solid fa-burger"></i>
             </div>
             <div class="scenario-block add">
+            </div>
+<!--            <div class="scenario-block add">
               <p>Kurve als Szenario speichern</p>
               <i class="fa-solid fa-plus"></i>
-            </div>
+            </div>-->
           </div>
         </div>
       </BottomBarContent>
@@ -46,7 +48,7 @@
           </div>
         </div>
         <div v-for="(entry, idx) in this.$store.getters.savedSims">
-          <SimulationEntry :input="entry.entry[2]" :results="entry.entry[0]" :computed-stats="entry.entry[1]"></SimulationEntry>
+          <SimulationEntry :idx="idx" :input="entry.inp" :results="entry.res" :computed-stats="entry.compRes"></SimulationEntry>
         </div>
 
       </BottomBarContent>
@@ -83,6 +85,9 @@ export default {
     }
   },
   methods: {
+    showAlert(msg){
+      alert(msg);
+    },
     saveCurrentSimulation(){
       this.$store.dispatch("saveResults");
       console.log(this.$store.getters.savedSims)
