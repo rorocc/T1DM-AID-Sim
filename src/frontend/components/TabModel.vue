@@ -116,7 +116,9 @@
         </div>
       </div>
       <div class="col-span-2">
-        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+        <p v-if="activeCircle=='meal'">Du hast insgesamt {{this.$store.getters.input.meals.length}} Mahlzeit(en) angegeben und diese <span v-if="!areAnnounced">nicht</span> angekündigt</p>
+        <p v-if="activeCircle=='calcGlucose'">Deine Eingaben werden dazu verwendet, um den Blutzuckerverlauf mit diesen Einstellungen simulieren zu können.</p>
+        <p v-if="activeCircle=='calcInsulin'">Insbesondere die Menge an Kohlenhydraten und deine körperlichen, physiologischen Parameter werden in die Berechnung der Insulindosierung miteinbezogen.</p>
       </div>
     </div>
   </div>
@@ -132,7 +134,7 @@ export default {
     return{
       activeCircle: 'meal',
       circles: {
-        'meal':{headline:'Deine Eingaben: Mahlzeiten', firstLine: 'Mahlzeit', secondLine: '40g KH', thirdLine: '', next: 'data', previous: 'adjustBasal'},
+        'meal':{headline:'Deine Eingaben: Mahlzeiten', firstLine: 'Mahlzeit', secondLine: this.getCarbs() + ' Kh', thirdLine: '', next: 'data', previous: 'adjustBasal'},
         'data':{headline:'Deine Eingaben: Physiologische Daten', firstLine: 'Physiolog.', secondLine: 'Daten', thirdLine:'', next: 'calcInsulin', previous: 'meal'},
         'calcInsulin':{headline:'Berechnungen: Berechnung Insulindosierung', firstLine: 'Berechnung', secondLine: 'Insulin-', thirdLine:'dosierung', next: 'calcGlucose', previous: 'data'},
         'calcGlucose':{headline:'Berechnungen: Berechnung Blutzucker', firstLine: 'Berechnung', secondLine: 'Blutzucker', thirdLine:'', next: 'injectInsulin', previous: 'calcInsulin'},
@@ -143,6 +145,23 @@ export default {
     }
   },
   methods:{
+    areAnnounced(){
+      let bool = true;
+      for(let i=0; i<this.$store.getters.input.meals.length;i++){
+        if(this.$store.getters.input.meals[i].announcement.isEmpty && bool){
+          bool = true;
+        }else bool = false;
+      }
+      return bool;
+    },
+    getCarbs(){
+      let carbs = 0;
+      for(let i=0; i<this.$store.getters.input.meals.length;i++){
+        carbs = carbs + this.$store.getters.input.meals[i].actual.carbs;
+      }
+
+      return carbs;
+    },
     toggleCircle(circleRef){
       this.$refs[this.activeCircle].classList.remove('focused-circle');
       this.$refs[circleRef].classList.add('focused-circle');
