@@ -35,7 +35,7 @@ export default {
   methods:{
     createDataset(){
       chartGlucose.data.datasets = [];
-
+      
       chartGlucose.data.datasets.push({
         type: "line",
         label: "Gl",
@@ -44,8 +44,8 @@ export default {
         segment: {
           borderColor: ctx => glucoseColor(ctx),
         },
-      },
-      {type: "scatter", 
+      });
+      /*{type: "scatter", 
         yAxisID: 'yG', 
         label: this.$t("totalmeal"), 
         backgroundColor: colors['THULightGray'], 
@@ -62,7 +62,7 @@ export default {
         rotation: 180,
           data: [],
       },
-      );
+      );*/
 
       let simResults = JSON.parse(JSON.stringify(this.$store.getters.results))
 
@@ -70,13 +70,13 @@ export default {
         const {t, x, u, y, logData} = result
         chartGlucose.data.datasets[0].data
           .push({x:t.valueOf(), y:y.G});
-      		  
+      	/*	  
         if (u.ibolus > 0) {
         chartGlucose.data.datasets[1].data
           .push({x:t, y:u.ibolus});
         }
         
-        chartGlucose.data.datasets[1].data.push({x:t, y: u.meal});
+        chartGlucose.data.datasets[1].data.push({x:t, y: u.meal}); */
       }
 
 
@@ -131,7 +131,7 @@ export default {
             min: 40,
             suggestedMax: 200,
           },
-          yG: {
+          /* yG: {
             title: {display: true, text: "g, g/min"}, 
             position: 'right',
             min: 0,
@@ -145,7 +145,7 @@ export default {
             min: 0, 
             ticks: {stepSize: 1},
             suggestedMax: 10, 
-          },
+          }, */
         },
         plugins: {
           legend: {display: false},

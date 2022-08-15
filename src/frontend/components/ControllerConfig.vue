@@ -104,8 +104,8 @@ export default {
 
 <i18n locale="en">
 {
-	"controllersettings": "Algorithm",
-	"selectalgo": "Select algorithm / device / treatment",
+	"controllersettings": "Algorithmus",
+	"selectalgo": "Algorithmus / Gerät wählen",
 }
 </i18n>
 
